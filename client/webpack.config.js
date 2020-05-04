@@ -19,19 +19,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader',
+        loader: 'style-loader!css-loader',
       },
       {
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          localIdentName: '[name]__[local]___[hash:base64:5]',
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
         },
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader'],
       },
     ],
   },
