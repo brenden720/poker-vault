@@ -1,0 +1,3 @@
+client/public/*.js
+node_modules
+.env
