@@ -1,5 +1,12 @@
-import { FETCH_SESSIONS } from '../actions/types';
+import { FETCH_SESSIONS, FETCH_SESSION } from '../actions/types';
 
 export default (state = {}, action) => {
-  return state;
+  switch (action.type) {
+    case FETCH_SESSIONS:
+      return { ...state };
+    case FETCH_SESSION:
+      return { ...state };
+    default:
+      return state;
+  }
 };

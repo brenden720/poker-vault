@@ -1,1 +1,2 @@
 export const FETCH_SESSIONS = 'FETCH_SESSIONS';
+export const FETCH_SESSION = 'FETCH_SESSION';

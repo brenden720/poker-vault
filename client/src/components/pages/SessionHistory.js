@@ -27,7 +27,7 @@ class SessionHistory extends React.Component {
                 Add New Session
               </Link>
               <Link
-                to='/sessions/new'
+                to='/sessions/:id'
                 className='btn btn-outline-dark btn-lg btn-block'
               >
                 Placeholder
