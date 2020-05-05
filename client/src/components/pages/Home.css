@@ -1,0 +1,22 @@
+#home-section {
+  background: url('../../../public/rFlushHearts.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  background-position: center;
+  min-height: 1400px;
+}
+
+#home-section .dark-overlay {
+  position: absolute;
+  top: 40;
+  left: auto;
+  width: 100%;
+  min-height: 1400px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#home-section .home-inner {
+  padding-top: 200px;
+}
