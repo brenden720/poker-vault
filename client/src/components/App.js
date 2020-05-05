@@ -7,6 +7,7 @@ import SessionHistoryFrontPage from './pages/SessionFrontPage';
 import SessionHistory from './pages/SessionHistory';
 import SessionHistoryForm from './pages/SessionHistoryForm';
 import SessionHistoryData from './pages/SessionHistoryData';
+import SessionSettings from './pages/SessionSettings';
 import Header from './Header';
 import history from '../history';
 
@@ -21,6 +22,11 @@ const App = () => {
             <Route path='/sessions' exact component={SessionHistoryFrontPage} />
             <Route path='/sessions/all' exact component={SessionHistory} />
             <Route path='/sessions/new' exact component={SessionHistoryForm} />
+            <Route
+              path='/sessions/settings'
+              exact
+              component={SessionSettings}
+            />
             <Route path='/sessions/:id' exact component={SessionHistoryData} />
           </Switch>
         </div>
