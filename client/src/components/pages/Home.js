@@ -1,7 +1,15 @@
 import React from 'react';
 import styles from './Home.css';
+import { connect } from 'react-redux';
+import history from '../../history';
 
 class Home extends React.Component {
+  componentDidUpdate() {
+    if (this.props.isSignedIn) {
+      history.push('/sessions');
+    }
+  }
+
   render() {
     return (
       <>
@@ -20,4 +28,11 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    currentUserId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn,
+  };
+};
+
+export default connect(mapStateToProps, null)(Home);

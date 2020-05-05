@@ -19,7 +19,7 @@ const App = () => {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/sessions' exact component={SessionHistoryFrontPage} />
-            <Route path='/sessions' exact component={SessionHistory} />
+            <Route path='/sessions/all' exact component={SessionHistory} />
             <Route path='/sessions/new' exact component={SessionHistoryForm} />
             <Route path='/sessions/:id' exact component={SessionHistoryData} />
           </Switch>

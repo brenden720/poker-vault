@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
+import GoogleAuth from './GoogleAuth';
 
 const Header = () => {
   return (
@@ -10,8 +11,10 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='mr-auto'>
-            <Nav.Link href='#'>Home</Nav.Link>
             <Nav.Link href='#'>Dashboard</Nav.Link>
+          </Nav>
+          <Nav className='ml-auto'>
+            <GoogleAuth />
           </Nav>
         </Navbar.Collapse>
       </Container>

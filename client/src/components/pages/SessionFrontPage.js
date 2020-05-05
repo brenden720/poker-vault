@@ -10,7 +10,10 @@ class SessionFrontPage extends React.Component {
           <h1 className='text-dark text-center'>Session History</h1>
           <div className='d-flex justify-content-around row-hl flex-md-row flex-column'>
             <div className='p-4 item-hl'>
-              <Link to='/sessions' className='btn btn-dark btn-lg btnFrontPage'>
+              <Link
+                to='/sessions/all'
+                className='btn btn-dark btn-lg btnFrontPage'
+              >
                 Cash Game History
               </Link>
             </div>
