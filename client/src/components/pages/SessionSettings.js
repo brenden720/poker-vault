@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Back from '../Back';
 
 class SessionSettings extends React.Component {
   render() {
@@ -8,11 +7,13 @@ class SessionSettings extends React.Component {
       <div className='container'>
         <div className='info-header'>
           <h1 className='text-dark text-center'>Settings</h1>
-          <Back />
         </div>
         <div className='d-flex flex-wrap justify-content-around'>
           <div className='p-4 col-6'>
-            <Link to='#' className='btn btn-primary btn-block'>
+            <Link
+              to='/sessions/settings/location_type'
+              className='btn btn-primary btn-block'
+            >
               Location Type
             </Link>
           </div>

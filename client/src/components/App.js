@@ -8,6 +8,8 @@ import SessionHistory from './pages/SessionHistory';
 import SessionHistoryForm from './pages/SessionHistoryForm';
 import SessionHistoryData from './pages/SessionHistoryData';
 import SessionSettings from './pages/SessionSettings';
+import LocationType from './pages/settings/LocationType';
+import LocationTypeAdd from './pages/settings/LocationTypeAdd';
 import Header from './Header';
 import history from '../history';
 
@@ -26,6 +28,16 @@ const App = () => {
               path='/sessions/settings'
               exact
               component={SessionSettings}
+            />
+            <Route
+              path='/sessions/settings/location_type'
+              exact
+              component={LocationType}
+            />
+            <Route
+              path='/sessions/settings/location_type/new'
+              exact
+              component={LocationTypeAdd}
             />
             <Route path='/sessions/:id' exact component={SessionHistoryData} />
           </Switch>

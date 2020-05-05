@@ -8,7 +8,7 @@ const SessionHistoryForm = (props) => {
     <div className='container'>
       <div className='info-header'>
         <h1 className='text-dark text-center'>Session History</h1>
-        <Back />
+        <Back route='/sessions/all' />
         <h3 className='text-dark text-center mb-3'>Cash Game Input</h3>
         <Form>
           <div className='form-row'>
@@ -58,7 +58,7 @@ const SessionHistoryForm = (props) => {
             </div>
           </div>
           <Link
-            to='/sessions'
+            to='/sessions/all'
             className='btn btn-outline-dark btn-lg btn-block'
           >
             Add Session
