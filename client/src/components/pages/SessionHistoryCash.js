@@ -5,27 +5,28 @@ import { connect } from 'react-redux';
 import { fetchSessions } from '../../actions/index';
 import AddContainer from '../AddContainer';
 
-class SessionHistory extends React.Component {
-  componentDidMount() {
-    this.props.fetchSessions();
-  }
+class SessionHistoryCash extends React.Component {
+  // componentDidMount() {
+  //   this.props.fetchSessions();
+  // }
 
   render() {
     return (
       <AddContainer
         mainHeader='Session History'
         subHeader='Cash Game History'
-        route1='/sessions/new'
+        route1='/sessions/cash/new'
         backRoute='/sessions'
       />
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    session: 'placeholder',
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     session: 'placeholder',
+//   };
+// };
 
-export default connect(mapStateToProps, { fetchSessions })(SessionHistory);
+// export default connect(mapStateToProps, { fetchSessions })(SessionHistoryCash);
+export default SessionHistoryCash;

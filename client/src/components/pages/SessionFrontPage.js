@@ -11,14 +11,17 @@ class SessionFrontPage extends React.Component {
           <div className='d-flex justify-content-around row-hl flex-md-row flex-column'>
             <div className='p-4 item-hl'>
               <Link
-                to='/sessions/all'
+                to='/sessions/cash/all'
                 className='btn btn-dark btn-lg btnFrontPage'
               >
                 Cash Game History
               </Link>
             </div>
             <div className='p-4 item-hl'>
-              <Link to='#' className='btn btn-dark btn-lg btnFrontPage'>
+              <Link
+                to='/sessions/tourny/all'
+                className='btn btn-dark btn-lg btnFrontPage'
+              >
                 Tournament History
               </Link>
             </div>

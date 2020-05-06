@@ -4,8 +4,10 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import SessionHistoryFrontPage from './pages/SessionFrontPage';
-import SessionHistory from './pages/SessionHistory';
-import SessionHistoryForm from './pages/SessionHistoryForm';
+import SessionHistoryCash from './pages/SessionHistoryCash';
+import SessionHistoryFormCash from './pages/SessionHistoryFormCash';
+import SessionHistoryTourny from './pages/SessionHistoryTourny';
+import SessionHistoryFormTourny from './pages/SessionHistoryFormTourny';
 import SessionHistoryData from './pages/SessionHistoryData';
 import SessionSettings from './pages/SessionSettings';
 import LocationType from './pages/settings/LocationType';
@@ -32,8 +34,26 @@ const App = () => {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/sessions' exact component={SessionHistoryFrontPage} />
-            <Route path='/sessions/all' exact component={SessionHistory} />
-            <Route path='/sessions/new' exact component={SessionHistoryForm} />
+            <Route
+              path='/sessions/cash/all'
+              exact
+              component={SessionHistoryCash}
+            />
+            <Route
+              path='/sessions/cash/new'
+              exact
+              component={SessionHistoryFormCash}
+            />
+            <Route
+              path='/sessions/tourny/all'
+              exact
+              component={SessionHistoryTourny}
+            />
+            <Route
+              path='/sessions/tourny/new'
+              exact
+              component={SessionHistoryFormTourny}
+            />
             <Route
               path='/sessions/settings'
               exact

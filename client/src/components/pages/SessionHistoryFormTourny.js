@@ -3,13 +3,13 @@ import { Form } from 'react-bootstrap';
 import Back from '../Back';
 import { Link } from 'react-router-dom';
 
-const SessionHistoryForm = (props) => {
+const SessionHistoryFormTourny = (props) => {
   return (
     <div className='container'>
       <div className='info-header'>
         <h1 className='text-dark text-center'>Session History</h1>
-        <Back route='/sessions/all' />
-        <h3 className='text-dark text-center mb-3'>Cash Game Input</h3>
+        <Back route='/sessions/tourny/all' />
+        <h3 className='text-dark text-center mb-3'>Tournament Input</h3>
         <Form>
           <div className='form-row'>
             <div className='col-md'>
@@ -17,9 +17,9 @@ const SessionHistoryForm = (props) => {
                 <Form.Label>Game</Form.Label>
                 <Form.Control type='text' placeholder='Game type' />
               </Form.Group>
-              <Form.Group controlId='formBasicStakeLevel'>
-                <Form.Label>Stake</Form.Label>
-                <Form.Control type='text' placeholder='Stake Level' />
+              <Form.Group controlId='formBasicTypeLevel'>
+                <Form.Label>Type</Form.Label>
+                <Form.Control type='text' placeholder='Type of Tournament' />
               </Form.Group>
               <Form.Group controlId='formBasicLimitType'>
                 <Form.Label>Limit Type</Form.Label>
@@ -32,6 +32,10 @@ const SessionHistoryForm = (props) => {
               <Form.Group controlId='formBasicLocationType'>
                 <Form.Label>Location Type</Form.Label>
                 <Form.Control type='text' placeholder='Location Type' />
+              </Form.Group>
+              <Form.Group controlId='formBasicPlayerNum'>
+                <Form.Label># Players</Form.Label>
+                <Form.Control type='text' placeholder='Entrants' />
               </Form.Group>
             </div>
             <div className='col-md'>
@@ -55,10 +59,14 @@ const SessionHistoryForm = (props) => {
                 <Form.Label>Tips</Form.Label>
                 <Form.Control type='text' placeholder='Tips' />
               </Form.Group>
+              <Form.Group controlId='formBasicTips'>
+                <Form.Label>Tips</Form.Label>
+                <Form.Control type='text' placeholder='Amount Tipped' />
+              </Form.Group>
             </div>
           </div>
           <Link
-            to='/sessions/all'
+            to='/sessions/tourny/all'
             className='btn btn-outline-dark btn-lg btn-block'
           >
             Add Session
@@ -69,4 +77,4 @@ const SessionHistoryForm = (props) => {
   );
 };
 
-export default SessionHistoryForm;
+export default SessionHistoryFormTourny;
