@@ -3,28 +3,28 @@ import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Back from '../../Back';
 
-const LocationTypeAdd = (props) => {
+const StakeTypeAdd = (props) => {
   return (
     <div className='container'>
       <div className='info-header'>
         <h1 className='text-dark text-center'>Settings</h1>
-        <Back route='/sessions/settings/location-type' />
-        <h3 className='text-dark text-center mb-3'>Locations</h3>
+        <Back route='/sessions/settings/stake-type' />
+        <h3 className='text-dark text-center mb-3'>Stakes</h3>
       </div>
       <Form>
-        <Form.Group controlId='formBasicLocationType'>
-          <Form.Label>Location Type</Form.Label>
-          <Form.Control type='text' placeholder='Location Type' />
+        <Form.Group controlId='formBasicStakeType'>
+          <Form.Label>Stake Type</Form.Label>
+          <Form.Control type='text' placeholder='Stake Type' />
         </Form.Group>
         <Link
-          to='/sessions/settings/location-type'
+          to='/sessions/settings/stake-type'
           className='btn btn-outline-dark btn-lg btn-block'
         >
-          Add Location
+          Add Stake
         </Link>
       </Form>
     </div>
   );
 };
 
-export default LocationTypeAdd;
+export default StakeTypeAdd;

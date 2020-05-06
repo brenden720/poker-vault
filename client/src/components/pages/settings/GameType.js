@@ -1,15 +1,15 @@
 import React from 'react';
 import AddContainer from '../../AddContainer';
 
-const LocationType = (props) => {
+const GameType = (props) => {
   return (
     <AddContainer
       mainHeader='Settings'
-      subHeader='Location Type'
-      route1='/sessions/settings/location-type/new'
+      subHeader='Game Type'
+      route1='/sessions/settings/game-type/new'
       backRoute='/sessions/settings'
     />
   );
 };
 
-export default LocationType;
+export default GameType;

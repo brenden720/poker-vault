@@ -1,15 +1,15 @@
 import React from 'react';
 import AddContainer from '../../AddContainer';
 
-const LocationType = (props) => {
+const StakeType = (props) => {
   return (
     <AddContainer
       mainHeader='Settings'
-      subHeader='Location Type'
-      route1='/sessions/settings/location-type/new'
+      subHeader='Stake Type'
+      route1='/sessions/settings/stake-type/new'
       backRoute='/sessions/settings'
     />
   );
 };
 
-export default LocationType;
+export default StakeType;
