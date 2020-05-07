@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import Back from '../Back';
 import { Link } from 'react-router-dom';
 
-const SessionHistoryFormTourny = (props) => {
+const SessionHistoryFormTourny = props => {
   return (
     <div className='container'>
       <div className='info-header'>
@@ -47,9 +47,9 @@ const SessionHistoryFormTourny = (props) => {
                 <Form.Label>End Time</Form.Label>
                 <Form.Control type='text' placeholder='End Time' />
               </Form.Group>
-              <Form.Group controlId='formBasicBuyIn'>
-                <Form.Label>Buy-In</Form.Label>
-                <Form.Control type='text' placeholder='Buy-In' />
+              <Form.Group controlId='formBasicEntryFee'>
+                <Form.Label>Entry Fee</Form.Label>
+                <Form.Control type='text' placeholder='Entry Fee' />
               </Form.Group>
               <Form.Group controlId='formBasicCashedOut'>
                 <Form.Label>Cashed Out</Form.Label>
