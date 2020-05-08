@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS location_types;
 
 CREATE TABLE location_types (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  location VARCHAR (100) UNIQUE
+  location_type VARCHAR (100) UNIQUE
 );
 
 DROP TABLE IF EXISTS user_location_types;

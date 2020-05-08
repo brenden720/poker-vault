@@ -40,5 +40,6 @@
     "plugins": [
       "@babel/plugin-proposal-class-properties"
     ]
-  }
+  },
+  "proxy": "http://localhost:3000"
 }
