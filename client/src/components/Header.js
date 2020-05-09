@@ -22,6 +22,22 @@ class Header extends React.Component {
     }
   }
 
+  renderWelcomeText() {
+    if (this.props.isSignedIn) {
+      const firstName = this.props.fullName
+        .split(/(\s).+\s/)
+        .join('')
+        .split(' ')[0];
+      return (
+        <>
+          <Navbar.Text className='pr-3'>Welcome {firstName}</Navbar.Text>
+        </>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const { isSignedIn } = this.props;
     return (
@@ -37,6 +53,7 @@ class Header extends React.Component {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='mr-auto'>{this.renderHeaderLinks()}</Nav>
             <Nav className='ml-auto'>
+              {this.renderWelcomeText()}
               <GoogleAuth />
             </Nav>
           </Navbar.Collapse>
@@ -48,8 +65,8 @@ class Header extends React.Component {
 
 // export default Header;
 
-const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth.isSignedIn };
+const mapStateToProps = state => {
+  return { isSignedIn: state.auth.isSignedIn, fullName: state.auth.fullName };
 };
 
 export default connect(mapStateToProps)(Header);

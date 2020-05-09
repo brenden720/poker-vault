@@ -20,9 +20,13 @@ class GoogleAuth extends React.Component {
     });
   }
 
-  onAuthChange = (isSignedIn) => {
+  onAuthChange = isSignedIn => {
     if (isSignedIn) {
-      this.props.signIn(this.auth.currentUser.get().getId());
+      const userId = this.auth.currentUser.get().getId();
+      const fullName = this.auth.currentUser.get().getBasicProfile().getName();
+      const email = this.auth.currentUser.get().getBasicProfile().getEmail();
+
+      this.props.signIn({ userId, fullName, email });
     } else {
       this.props.signOut();
     }
@@ -60,7 +64,7 @@ class GoogleAuth extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return { isSignedIn: state.auth.isSignedIn };
 };
 

@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'regenerator-runtime/runtime.js';
 
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';

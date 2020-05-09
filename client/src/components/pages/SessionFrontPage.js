@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './SessionFrontPage.css';
+import { createUser } from '../../actions';
 
 class SessionFrontPage extends React.Component {
+  componentDidMount() {
+    this.props.createUser();
+  }
   render() {
     return (
       <div className='container'>
@@ -40,4 +45,5 @@ class SessionFrontPage extends React.Component {
   }
 }
 
-export default SessionFrontPage;
+// export default SessionFrontPage;
+export default connect(null, { createUser })(SessionFrontPage);
