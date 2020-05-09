@@ -21,15 +21,16 @@ export const signOut = () => {
   };
 };
 
-export const fetchSessions = () => async dispatch => {
-  const response = await pages.get('api//sessions');
-
-  dispatch({ type: FETCH_SESSIONS, payload: { session: response.data } });
+export const fetchSessions = () => {
+  return async (dispatch, getState) => {
+    const { userId } = getState().auth;
+    const response = await pages.get(`api/cash/${userId}/cash_sessions`);
+    dispatch({ type: FETCH_SESSIONS, payload: response.data });
+  };
 };
 
 export const fetchSession = () => async dispatch => {
   const response = await pages.get('api//sessions/:id');
-
   dispatch({ type: FETCH_SESSION, payload: { session: response.data } });
 };
 
@@ -47,7 +48,6 @@ export const createCashSession = formValues => {
       ...formValues,
       userId,
     });
-
     dispatch({ type: CREATE_CASH_SESSION, payload: response.data });
     history.push('/sessions/cash/all');
   };

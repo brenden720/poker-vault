@@ -1,10 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Back from './Back';
+import { fetchSessions } from '../actions';
 
 class AddContainer extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.sessions.length === this.props.sessions.length) {
+      this.props.fetchSessions();
+    }
+  }
+
+  renderSessions() {
+    return this.props.sessions.map(session => {
+      return (
+        <Link
+          to='#'
+          className='btn btn-outline-dark btn-lg btn-block'
+          key={session.id}
+        >
+          Session {session.id}
+        </Link>
+      );
+    });
+  }
+
   render() {
     const { mainHeader, subHeader, route1, backRoute } = this.props;
+
     return (
       <div className='container'>
         <div className='info-header'>
@@ -19,9 +42,7 @@ class AddContainer extends React.Component {
               >
                 Add
               </Link>
-              <Link to='#' className='btn btn-outline-dark btn-lg btn-block'>
-                Placeholder
-              </Link>
+              {this.renderSessions()}
             </div>
           </div>
         </div>
@@ -30,4 +51,11 @@ class AddContainer extends React.Component {
   }
 }
 
-export default AddContainer;
+// export default AddContainer;
+const mapStateToProps = state => {
+  return {
+    sessions: Object.values(state.sessions),
+  };
+};
+
+export default connect(mapStateToProps, { fetchSessions })(AddContainer);

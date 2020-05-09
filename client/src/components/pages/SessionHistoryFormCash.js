@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import Back from '../Back';
-import { createCashSession } from '../../actions';
+import { createCashSession, fetchSessions } from '../../actions';
 
 class SessionHistoryFormCash extends React.Component {
   onChange = e => {
@@ -241,4 +241,4 @@ const formWrapped = reduxForm({
   form: 'sessionHistoryCashForm',
 })(SessionHistoryFormCash);
 
-export default connect(null, { createCashSession })(formWrapped);
+export default connect(null, { createCashSession, fetchSessions })(formWrapped);

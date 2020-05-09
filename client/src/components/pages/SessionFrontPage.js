@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './SessionFrontPage.css';
-import { createUser } from '../../actions';
+import { createUser, fetchSessions } from '../../actions';
 
 class SessionFrontPage extends React.Component {
   componentDidMount() {
     this.props.createUser();
+    this.props.fetchSessions();
   }
+
   render() {
     return (
       <div className='container'>
@@ -45,5 +47,13 @@ class SessionFrontPage extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    sessions: state.sessions,
+  };
+};
+
 // export default SessionFrontPage;
-export default connect(null, { createUser })(SessionFrontPage);
+export default connect(mapStateToProps, { createUser, fetchSessions })(
+  SessionFrontPage,
+);

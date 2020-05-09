@@ -3,6 +3,8 @@ const db = require('../db');
 
 const router = express.Router();
 
+// Get all cash sessions
+
 router.get('/cash/:userid/:sessiontype', async (req, res, next) => {
   try {
     let results = await db.getSessions(
@@ -15,6 +17,8 @@ router.get('/cash/:userid/:sessiontype', async (req, res, next) => {
     res.sendStatus(500);
   }
 });
+
+// Get one cash session
 
 router.get('/cash/:userid/:sessiontype/:sessionid', async (req, res, next) => {
   try {
@@ -102,7 +106,6 @@ router.post('/settings/:userid/:settingtype', async (req, res, next) => {
 
 // Add a new cash session
 router.post('/cash/:userid', async (req, res, next) => {
-  console.log('req.body', req.body);
   try {
     let results = await db.addCashSession(req.params.userid, req.body);
     res.json(results);

@@ -6,10 +6,6 @@ import { fetchSessions } from '../../actions/index';
 import AddContainer from '../AddContainer';
 
 class SessionHistoryCash extends React.Component {
-  // componentDidMount() {
-  //   this.props.fetchSessions();
-  // }
-
   render() {
     return (
       <AddContainer
@@ -22,11 +18,11 @@ class SessionHistoryCash extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     session: 'placeholder',
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    sessions: state.sessions,
+  };
+};
 
-// export default connect(mapStateToProps, { fetchSessions })(SessionHistoryCash);
-export default SessionHistoryCash;
+export default connect(mapStateToProps, { fetchSessions })(SessionHistoryCash);
+// export default SessionHistoryCash;
