@@ -6,7 +6,7 @@ USE PokerVault;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-  id INT PRIMARY KEY,
+  id VARCHAR(100) UNIQUE PRIMARY KEY,
   first_name VARCHAR(100),
   last_name VARCHAR(100),
   email VARCHAR(100)
@@ -23,7 +23,7 @@ CREATE TABLE location_types (
 DROP TABLE IF EXISTS user_location_types;
 
 CREATE TABLE user_location_types (
-  user_id INT,
+  user_id VARCHAR(100),
   location_type_id INT,
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (location_type_id) REFERENCES location_types (id),
@@ -41,7 +41,7 @@ CREATE TABLE limit_types (
 DROP TABLE IF EXISTS user_limit_types;
 
 CREATE TABLE user_limit_types (
-  user_id INT,
+  user_id VARCHAR(100),
   limit_type_id INT,
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (limit_type_id) REFERENCES limit_types (id),
@@ -59,7 +59,7 @@ CREATE TABLE stakes (
 DROP TABLE IF EXISTS user_stakes;
 
 CREATE TABLE user_stakes (
-  user_id INT,
+  user_id VARCHAR(100),
   stake_id INT,
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (stake_id) REFERENCES stakes (id),
@@ -77,7 +77,7 @@ CREATE TABLE locations (
 DROP TABLE IF EXISTS user_locations;
 
 CREATE TABLE user_locations (
-  user_id INT,
+  user_id VARCHAR(100),
   location_id INT,
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (location_id) REFERENCES locations (id),
@@ -95,7 +95,7 @@ CREATE TABLE tournament_types (
 DROP TABLE IF EXISTS user_tournament_types;
 
 CREATE TABLE user_tournament_types (
-  user_id INT,
+  user_id VARCHAR(100),
   tournament_type_id INT,
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (tournament_type_id) REFERENCES tournament_types (id),
@@ -113,7 +113,7 @@ CREATE TABLE games (
 DROP TABLE IF EXISTS user_games;
 
 CREATE TABLE user_games (
-  user_id INT,
+  user_id VARCHAR(100),
   game_id INT,
   FOREIGN KEY (user_id) REFERENCES users (id),
   FOREIGN KEY (game_id) REFERENCES games (id),
@@ -136,7 +136,7 @@ CREATE TABLE cash_sessions (
   cashed_out INT,
   tips INT,
   notes VARCHAR(255),
-  user_id INT,
+  user_id VARCHAR(100),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
@@ -158,6 +158,6 @@ CREATE TABLE tournament_sessions (
   places_paid INT,
   tips INT,
   notes VARCHAR(255),
-  user_id INT,
+  user_id VARCHAR(100),
   FOREIGN KEY (user_id) REFERENCES users (id)
 );

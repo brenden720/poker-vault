@@ -83,4 +83,68 @@ router.get('/results/:userid/:resulttype', async (req, res, next) => {
   }
 });
 
+// POST requests
+
+// Add a specific setting
+router.post('/settings/:userid/:settingtype', async (req, res, next) => {
+  try {
+    let results = await db.addSetting(
+      req.params.settingtype,
+      req.params.userid,
+      req.body.newSetting,
+    );
+    res.json(results);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+// Add a new cash session
+router.post('/cash/:userid', async (req, res, next) => {
+  console.log('req.body', req.body);
+  try {
+    let results = await db.addCashSession(req.params.userid, req.body);
+    res.json(results);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+// Add User
+
+router.post('/user/:userid/:fullName/:email', async (req, res, next) => {
+  const { userid, fullName, email } = req.params;
+
+  if (JSON.parse(userid) === null) {
+    res.sendStatus(200);
+    return;
+  }
+
+  try {
+    let idCheck = await db.checkUser(userid);
+    let count = idCheck[0].total;
+
+    if (count > 0) {
+      return res.sendStatus(200);
+    }
+
+    const firstName = fullName
+      .split(/(\s).+\s/)
+      .join('')
+      .split(' ')[0];
+    const lastName = fullName
+      .split(/(\s).+\s/)
+      .join('')
+      .split(' ')[1];
+
+    await db.addUser([userid, firstName, lastName, email]);
+    res.sendStatus(201);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
