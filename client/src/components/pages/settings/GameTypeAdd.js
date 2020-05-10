@@ -3,12 +3,12 @@ import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Back from '../../Back';
 
-const GameTypeAdd = (props) => {
+const GameTypeAdd = props => {
   return (
     <div className='container'>
       <div className='info-header'>
         <h1 className='text-dark text-center'>Settings</h1>
-        <Back route='/sessions/settings/game-type' />
+        <Back route='/sessions/settings/game' />
         <h3 className='text-dark text-center mb-3'>Games</h3>
       </div>
       <Form>
@@ -17,7 +17,7 @@ const GameTypeAdd = (props) => {
           <Form.Control type='text' placeholder='Game Type' />
         </Form.Group>
         <Link
-          to='/sessions/settings/game-type'
+          to='/sessions/settings/game'
           className='btn btn-outline-dark btn-lg btn-block'
         >
           Add Game

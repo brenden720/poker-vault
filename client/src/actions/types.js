@@ -3,3 +3,5 @@ export const FETCH_SESSION = 'FETCH_SESSION';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const CREATE_CASH_SESSION = 'CREATE_CASH_SESSION';
+export const FETCH_SETTINGS = 'FETCH_SETTINGS';
+export const FETCH_SETTING = 'FETCH_SETTING';

@@ -3,6 +3,7 @@ import history from '../history';
 import {
   FETCH_SESSIONS,
   FETCH_SESSION,
+  FETCH_SETTINGS,
   SIGN_IN,
   SIGN_OUT,
   CREATE_CASH_SESSION,
@@ -32,6 +33,12 @@ export const fetchSessions = () => {
 export const fetchSession = () => async dispatch => {
   const response = await pages.get('api//sessions/:id');
   dispatch({ type: FETCH_SESSION, payload: { session: response.data } });
+};
+
+export const fetchSettings = () => {
+  return {
+    type: FETCH_SETTINGS,
+  };
 };
 
 export const createUser = () => {

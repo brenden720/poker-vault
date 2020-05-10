@@ -81,12 +81,12 @@ const App = () => {
               component={LimitTypeAdd}
             />
             <Route
-              path='/sessions/settings/stake-type'
+              path='/sessions/settings/stake'
               exact
               component={StakeType}
             />
             <Route
-              path='/sessions/settings/stake-type/new'
+              path='/sessions/settings/stake/new'
               exact
               component={StakeTypeAdd}
             />
@@ -110,13 +110,9 @@ const App = () => {
               exact
               component={TournamentTypeAdd}
             />
+            <Route path='/sessions/settings/game' exact component={GameType} />
             <Route
-              path='/sessions/settings/game-type'
-              exact
-              component={GameType}
-            />
-            <Route
-              path='/sessions/settings/game-type/new'
+              path='/sessions/settings/game/new'
               exact
               component={GameTypeAdd}
             />

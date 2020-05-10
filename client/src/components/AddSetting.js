@@ -1,15 +1,11 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Back from '../../Back';
+import { Field, reduxForm } from 'redux-form';
 
-const LocationTypeAdd = props => {
+const AddSetting = props => {
   return (
-    <div className='container'>
-      <div className='info-header'>
-        <h1 className='text-dark text-center'>Settings</h1>
-        <Back route='/sessions/settings/location-type' />
-      </div>
+    <>
       <h3 className='text-dark text-center mb-3'>Locations</h3>
       <Form>
         <Form.Group controlId='formBasicLocationType'>
@@ -23,8 +19,18 @@ const LocationTypeAdd = props => {
           Add Location
         </Link>
       </Form>
-    </div>
+    </>
   );
 };
 
-export default LocationTypeAdd;
+const mapStateToProps = state => {
+  return {};
+};
+
+// export default connect(null)(AddSetting);
+
+const formWrapped = reduxForm({
+  form: 'settingAdd',
+})(AddSetting);
+
+export default connect(null)(formWrapped);

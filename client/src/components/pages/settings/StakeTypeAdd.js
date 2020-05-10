@@ -3,12 +3,12 @@ import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Back from '../../Back';
 
-const StakeTypeAdd = (props) => {
+const StakeTypeAdd = props => {
   return (
     <div className='container'>
       <div className='info-header'>
         <h1 className='text-dark text-center'>Settings</h1>
-        <Back route='/sessions/settings/stake-type' />
+        <Back route='/sessions/settings/stake' />
         <h3 className='text-dark text-center mb-3'>Stakes</h3>
       </div>
       <Form>
@@ -17,7 +17,7 @@ const StakeTypeAdd = (props) => {
           <Form.Control type='text' placeholder='Stake Type' />
         </Form.Group>
         <Link
-          to='/sessions/settings/stake-type'
+          to='/sessions/settings/stake'
           className='btn btn-outline-dark btn-lg btn-block'
         >
           Add Stake

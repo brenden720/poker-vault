@@ -3,6 +3,7 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GoogleAuth from './GoogleAuth';
+import { fetchSettings } from '../actions';
 
 class Header extends React.Component {
   renderHeaderLinks() {
@@ -69,4 +70,4 @@ const mapStateToProps = state => {
   return { isSignedIn: state.auth.isSignedIn, fullName: state.auth.fullName };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { fetchSettings })(Header);
