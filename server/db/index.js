@@ -38,7 +38,7 @@ pokervaultdb.getSession = (sessionType, userId, sessionId) => {
   });
 };
 
-pokervaultdb.getSettings = (settingType, userId) => {
+pokervaultdb.getSetting = (settingType, userId) => {
   return new Promise((resolve, reject) => {
     const column = settingType.substring(0, settingType.length - 1);
     const userSettingType = `user_${settingType}`;

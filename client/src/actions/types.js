@@ -5,3 +5,5 @@ export const SIGN_OUT = 'SIGN_OUT';
 export const CREATE_CASH_SESSION = 'CREATE_CASH_SESSION';
 export const FETCH_SETTINGS = 'FETCH_SETTINGS';
 export const FETCH_SETTING = 'FETCH_SETTING';
+export const SET_DASHBOARD = 'SET_DASHBOARD';
+export const SET_SETTINGS = 'SET_SETTINGS';

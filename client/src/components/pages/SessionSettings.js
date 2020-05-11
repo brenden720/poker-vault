@@ -1,8 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { setSettings, fetchSetting } from '../../actions';
 
 class SessionSettings extends React.Component {
+  componentDidMount() {
+    this.props.setSettings();
+  }
+
+  onSettingClick = settingName => {
+    settingName += 's';
+    this.props.fetchSetting(settingName);
+  };
+
   renderSettings() {
     return this.props.settings.map((setting, id) => {
       const parsedSettingPath = setting.replace(/_/g, '-');
@@ -11,12 +21,12 @@ class SessionSettings extends React.Component {
         .split(' ')
         .map(s => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ');
-
       return (
         <div className='p-4 col-6' key={id}>
           <Link
             to={`/sessions/settings/${parsedSettingPath}`}
             className='btn btn-primary btn-block'
+            onClick={() => this.onSettingClick(setting)}
           >
             {parsedTitle}
           </Link>
@@ -43,4 +53,6 @@ const mapStateToProps = state => {
   return { settings: Object.keys(state.settings) };
 };
 
-export default connect(mapStateToProps)(SessionSettings);
+export default connect(mapStateToProps, { setSettings, fetchSetting })(
+  SessionSettings,
+);

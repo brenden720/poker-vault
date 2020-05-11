@@ -1,7 +1,7 @@
 import React from 'react';
 import AddContainer from '../../AddContainer';
 
-const GameType = (props) => {
+const GameType = props => {
   return (
     <AddContainer
       mainHeader='Settings'

@@ -6,12 +6,13 @@ import { fetchSessions } from '../actions';
 
 class AddContainer extends React.Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.sessions.length === this.props.sessions.length) {
+    const { dashboard, settings } = this.props.container;
+    if (dashboard && prevProps.sessions.length === this.props.sessions.length) {
       this.props.fetchSessions();
     }
   }
 
-  renderSessions() {
+  renderSessions = () => {
     return this.props.sessions.map(session => {
       return (
         <Link
@@ -23,7 +24,38 @@ class AddContainer extends React.Component {
         </Link>
       );
     });
-  }
+  };
+
+  renderSettings = () => {
+    if (!this.props.settings) {
+      return null;
+    }
+    const settings = this.props.settings.values;
+
+    return settings.map(setting => {
+      return (
+        <Link
+          to='#'
+          className='btn btn-outline-dark btn-lg btn-block'
+          key={setting}
+        >
+          {setting}
+        </Link>
+      );
+    });
+  };
+
+  renderComponent = () => {
+    const { dashboard, settings } = this.props.container;
+
+    if (dashboard) {
+      console.log('dashboard stuff');
+      return this.renderSessions();
+    }
+    if (settings) {
+      return this.renderSettings();
+    }
+  };
 
   render() {
     const { mainHeader, subHeader, route1, backRoute } = this.props;
@@ -42,7 +74,7 @@ class AddContainer extends React.Component {
               >
                 Add
               </Link>
-              {this.renderSessions()}
+              {this.renderComponent()}
             </div>
           </div>
         </div>
@@ -51,10 +83,18 @@ class AddContainer extends React.Component {
   }
 }
 
-// export default AddContainer;
 const mapStateToProps = state => {
+  let setting = '';
+  for (let key in state.settings) {
+    if (state.settings[key].isActive) {
+      setting = key;
+      break;
+    }
+  }
   return {
     sessions: Object.values(state.sessions),
+    settings: state.settings[setting],
+    container: state.container,
   };
 };
 

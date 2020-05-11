@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './SessionFrontPage.css';
-import { createUser, fetchSessions, fetchSettings } from '../../actions';
+import { createUser, fetchSessions, setDashboard } from '../../actions';
 
 class SessionFrontPage extends React.Component {
   componentDidMount() {
     this.props.createUser();
     this.props.fetchSessions();
-    // this.props.fetchSettings();
+    this.props.setDashboard();
   }
 
   render() {
@@ -58,5 +58,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   createUser,
   fetchSessions,
-  // fetchSettings,
+  setDashboard,
 })(SessionFrontPage);

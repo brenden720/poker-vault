@@ -66,7 +66,7 @@ router.get(
 
 router.get('/settings/:userid/:settingtype', async (req, res, next) => {
   try {
-    let results = await db.getSettings(
+    let results = await db.getSetting(
       req.params.settingtype,
       req.params.userid,
     );

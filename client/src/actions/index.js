@@ -1,9 +1,12 @@
 import pages from '../apis/pages';
 import history from '../history';
 import {
+  SET_DASHBOARD,
+  SET_SETTINGS,
   FETCH_SESSIONS,
   FETCH_SESSION,
   FETCH_SETTINGS,
+  FETCH_SETTING,
   SIGN_IN,
   SIGN_OUT,
   CREATE_CASH_SESSION,
@@ -19,6 +22,18 @@ export const signIn = payload => {
 export const signOut = () => {
   return {
     type: SIGN_OUT,
+  };
+};
+
+export const setDashboard = () => {
+  return {
+    type: SET_DASHBOARD,
+  };
+};
+
+export const setSettings = () => {
+  return {
+    type: SET_SETTINGS,
   };
 };
 
@@ -38,6 +53,21 @@ export const fetchSession = () => async dispatch => {
 export const fetchSettings = () => {
   return {
     type: FETCH_SETTINGS,
+  };
+};
+
+export const fetchSetting = setting => {
+  return async (dispatch, getState) => {
+    const { userId } = getState().auth;
+    const response = await pages.get(`api/settings/${userId}/${setting}`);
+    let submittedData = null;
+
+    if (response.data.length) {
+      submittedData = response.data;
+    } else {
+      submittedData = setting.substring(0, setting.length - 1);
+    }
+    dispatch({ type: FETCH_SETTING, payload: submittedData });
   };
 };
 

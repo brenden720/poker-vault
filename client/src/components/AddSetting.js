@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 
 const AddSetting = props => {
+  console.log(settings, settingType, container);
   return (
     <>
       <h3 className='text-dark text-center mb-3'>Locations</h3>
@@ -24,7 +25,18 @@ const AddSetting = props => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  let setting = '';
+  for (let key in state.settings) {
+    if (state.settings[key].isActive) {
+      setting = key;
+      break;
+    }
+  }
+  return {
+    settings: state.settings[setting],
+    container: state.container,
+    settingType: setting,
+  };
 };
 
 // export default connect(null)(AddSetting);
@@ -33,4 +45,4 @@ const formWrapped = reduxForm({
   form: 'settingAdd',
 })(AddSetting);
 
-export default connect(null)(formWrapped);
+export default connect(mapStateToProps)(formWrapped);
