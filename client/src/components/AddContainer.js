@@ -1,23 +1,13 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Back from './Back';
 import { fetchSessions, fetchSetting } from '../actions';
 
-class AddContainer extends React.Component {
-  componentDidUpdate(prevProps) {
-    const { dashboard, settings } = this.props.container;
-    console.log('prev props: ', prevProps.settings);
-    if (dashboard && prevProps.sessions.length === this.props.sessions.length) {
-      this.props.fetchSessions();
-    }
-    if (
-      settings &&
-      prevProps.settings.values.length === this.props.settings.values.length
-    ) {
-      this.props.fetchSetting(this.getActiveSetting());
-      console.log('still updating');
-    }
+class AddContainer extends PureComponent {
+  componentDidMount() {
+    this.props.fetchSessions();
+    this.props.fetchSetting(this.getActiveSetting());
   }
 
   getActiveSetting = () => {
@@ -28,7 +18,7 @@ class AddContainer extends React.Component {
         activeSetting = keys.concat('s');
       }
     }
-    console.log(activeSetting);
+
     return activeSetting;
   };
 
@@ -64,7 +54,6 @@ class AddContainer extends React.Component {
     const { dashboard, settings } = this.props.container;
 
     if (dashboard) {
-      console.log('dashboard stuff');
       return this.renderSessions();
     }
     if (settings) {

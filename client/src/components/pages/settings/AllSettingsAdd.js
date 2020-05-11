@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
 import Back from '../../Back';
 import { createSetting } from '../../../actions';
 
@@ -33,20 +32,40 @@ class AllSettingsAdd extends React.Component {
     return parsedTitle;
   };
 
-  renderInput = ({ input, meta, type, placeholder, min, max }) => {
+  renderError({ error, touched }) {
+    if (touched && error) {
+      console.log('error appears?');
+      return <div className='header text-danger'>{error}</div>;
+    }
+  }
+
+  renderInput = ({ input, meta, type, placeholder }) => {
+    const className = `field ${
+      meta.error && meta.touched ? 'error border border-danger' : ''
+    }`;
+
     return (
-      <Form.Control
-        type={type}
-        placeholder={placeholder}
-        value={input.value}
-        onChange={input.onChange}
-      />
+      <>
+        <div className={className}>
+          <Form.Control
+            type={type}
+            placeholder={placeholder}
+            value={input.value}
+            onChange={input.onChange}
+          />
+        </div>
+        {this.renderError(meta)}
+      </>
     );
   };
 
   render() {
     const activeSetting = this.getActiveSetting();
     const subHeader = this.getSubHeader(activeSetting);
+    const activeSettingParsed = activeSetting.replace(/-/g, '_');
+    console.log('Active setting: ', activeSetting);
+    console.log('SubHeader: ', subHeader);
+    console.log('SubHeader parsed: ', activeSettingParsed);
 
     return (
       <div className='container'>
@@ -59,18 +78,12 @@ class AllSettingsAdd extends React.Component {
           <Form.Group controlId={`formBasic${activeSetting}`}>
             <Form.Label>{subHeader}</Form.Label>
             <Field
-              name={subHeader}
+              name={activeSettingParsed}
               type='text'
               component={this.renderInput}
               placeholder={subHeader}
             />
           </Form.Group>
-          {/* <Link
-            to={`/sessions/settings/${activeSetting}`}
-            className='btn btn-outline-dark btn-lg btn-block'
-          >
-            Add {subHeader}
-          </Link> */}
           <button
             type='submit'
             className='btn btn-outline-dark btn-lg btn-block'
@@ -83,6 +96,37 @@ class AllSettingsAdd extends React.Component {
   }
 }
 
+const validate = formValues => {
+  console.log('form values in validate: ', formValues);
+  const errors = {};
+
+  if (!formValues.location_type) {
+    errors.location_type = 'You must enter a location type';
+  }
+
+  if (!formValues.limit_type) {
+    errors.limit_type = 'You must enter a limit type';
+  }
+
+  if (!formValues.stake) {
+    errors.stake = 'You must enter a stake level';
+  }
+
+  if (!formValues.location) {
+    errors.location = 'You must enter a location';
+  }
+
+  if (!formValues.tournament_type) {
+    errors.tournament_type = 'You must enter a tournament type';
+  }
+
+  if (!formValues.game) {
+    errors.game = 'You must enter a game type';
+  }
+
+  return errors;
+};
+
 const mapStateToProps = state => {
   return {
     settingNames: Object.keys(state.settings),
@@ -92,6 +136,7 @@ const mapStateToProps = state => {
 
 const formWrapped = reduxForm({
   form: 'settingsAddForm',
+  validate,
 })(AllSettingsAdd);
 
 export default connect(mapStateToProps, { createSetting })(formWrapped);
