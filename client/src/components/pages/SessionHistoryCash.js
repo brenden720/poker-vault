@@ -1,5 +1,3 @@
-import 'regenerator-runtime/runtime.js';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchSessions } from '../../actions/index';

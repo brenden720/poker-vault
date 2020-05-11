@@ -95,7 +95,7 @@ router.post('/settings/:userid/:settingtype', async (req, res, next) => {
     let results = await db.addSetting(
       req.params.settingtype,
       req.params.userid,
-      req.body.newSetting,
+      req.body,
     );
     res.json(results);
   } catch (e) {

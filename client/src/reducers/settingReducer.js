@@ -14,9 +14,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_SETTINGS:
       return { ...state };
     case FETCH_SETTING:
-      console.log(action.payload);
       if (typeof action.payload === 'string') {
-        console.log('in if');
         return {
           ...state,
           location_type: {

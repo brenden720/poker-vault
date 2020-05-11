@@ -7,3 +7,4 @@ export const FETCH_SETTINGS = 'FETCH_SETTINGS';
 export const FETCH_SETTING = 'FETCH_SETTING';
 export const SET_DASHBOARD = 'SET_DASHBOARD';
 export const SET_SETTINGS = 'SET_SETTINGS';
+export const CREATE_SETTING = 'CREATE_SETTING';

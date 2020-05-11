@@ -78,7 +78,8 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
     const column = settingType.substring(0, settingType.length - 1);
     const settingTypeId = `${column}_id`;
     const combinedTable = `user_${settingType}`;
-    const queryOne = `INSERT INTO ${settingType} (${column}) VALUES ('${newSetting}')`;
+    const value = Object.values(newSetting)[0];
+    const queryOne = `INSERT INTO ${settingType} (${column}) VALUES ('${value}')`;
     const queryTwo = `INSERT INTO ${combinedTable} (user_id, ${settingTypeId}) VALUES (${userId}, last_insert_id())`;
 
     pool.getConnection((err, conn) => {

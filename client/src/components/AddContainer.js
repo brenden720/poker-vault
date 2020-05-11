@@ -2,15 +2,35 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Back from './Back';
-import { fetchSessions } from '../actions';
+import { fetchSessions, fetchSetting } from '../actions';
 
 class AddContainer extends React.Component {
   componentDidUpdate(prevProps) {
     const { dashboard, settings } = this.props.container;
+    console.log('prev props: ', prevProps.settings);
     if (dashboard && prevProps.sessions.length === this.props.sessions.length) {
       this.props.fetchSessions();
     }
+    if (
+      settings &&
+      prevProps.settings.values.length === this.props.settings.values.length
+    ) {
+      this.props.fetchSetting(this.getActiveSetting());
+      console.log('still updating');
+    }
   }
+
+  getActiveSetting = () => {
+    const { settingDetails } = this.props;
+    let activeSetting = '';
+    for (let keys in settingDetails) {
+      if (settingDetails[keys].isActive) {
+        activeSetting = keys.concat('s');
+      }
+    }
+    console.log(activeSetting);
+    return activeSetting;
+  };
 
   renderSessions = () => {
     return this.props.sessions.map(session => {
@@ -31,14 +51,9 @@ class AddContainer extends React.Component {
       return null;
     }
     const settings = this.props.settings.values;
-
-    return settings.map(setting => {
+    return settings.map((setting, id) => {
       return (
-        <Link
-          to='#'
-          className='btn btn-outline-dark btn-lg btn-block'
-          key={setting}
-        >
+        <Link to='#' className='btn btn-outline-dark btn-lg btn-block' key={id}>
           {setting}
         </Link>
       );
@@ -95,7 +110,10 @@ const mapStateToProps = state => {
     sessions: Object.values(state.sessions),
     settings: state.settings[setting],
     container: state.container,
+    settingDetails: state.settings,
   };
 };
 
-export default connect(mapStateToProps, { fetchSessions })(AddContainer);
+export default connect(mapStateToProps, { fetchSessions, fetchSetting })(
+  AddContainer,
+);

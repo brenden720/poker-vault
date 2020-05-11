@@ -10,6 +10,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   CREATE_CASH_SESSION,
+  CREATE_SETTING,
 } from './types';
 
 export const signIn = payload => {
@@ -75,6 +76,29 @@ export const createUser = () => {
   return async (dispatch, getState) => {
     const { userId, fullName, email } = getState().auth;
     await pages.post(`/api/user/${userId}/${fullName}/${email}`);
+  };
+};
+
+export const createSetting = formValues => {
+  console.log('formVals: ', formValues);
+  return async (dispatch, getState) => {
+    const { userId } = getState().auth;
+    const { settings } = getState();
+    let activeSetting = '';
+    for (let keys in settings) {
+      if (settings[keys].isActive) {
+        activeSetting = keys += 's';
+      }
+    }
+    let activeSettingParsed = activeSetting.replace(/_/g, '-').slice(0, -1);
+    console.log(activeSettingParsed);
+
+    const response = await pages.post(
+      `api/settings/${userId}/${activeSetting}`,
+      { ...formValues },
+    );
+    dispatch({ type: CREATE_SETTING, payload: response.data });
+    history.push(`/sessions/settings/${activeSettingParsed}`);
   };
 };
 
