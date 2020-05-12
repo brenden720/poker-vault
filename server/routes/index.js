@@ -150,4 +150,7 @@ router.post('/user/:userid/:fullName/:email', async (req, res, next) => {
   }
 });
 
+// Delete setting
+router.delete('', async (req, res, next) => {});
+
 module.exports = router;

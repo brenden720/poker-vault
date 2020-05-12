@@ -20,7 +20,7 @@ import history from '../history';
 
 class App extends React.Component {
   render() {
-    const { settingNames, settingDetails } = this.props;
+    const { settingDetails } = this.props;
     let activeSetting = '';
     for (let keys in settingDetails) {
       if (settingDetails[keys].isActive) {
@@ -90,7 +90,6 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    settingNames: Object.keys(state.settings),
     settingDetails: state.settings,
   };
 };

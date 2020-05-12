@@ -6,6 +6,17 @@ import Back from '../../Back';
 import { createSetting } from '../../../actions';
 
 class AllSettingsAdd extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.inputRef) {
+      this.inputRef.current.focus();
+    }
+  }
+
   onSubmit = formProps => {
     this.props.createSetting(formProps);
   };
@@ -52,6 +63,7 @@ class AllSettingsAdd extends React.Component {
             placeholder={placeholder}
             value={input.value}
             onChange={input.onChange}
+            ref={this.inputRef}
           />
         </div>
         {this.renderError(meta)}
@@ -63,9 +75,6 @@ class AllSettingsAdd extends React.Component {
     const activeSetting = this.getActiveSetting();
     const subHeader = this.getSubHeader(activeSetting);
     const activeSettingParsed = activeSetting.replace(/-/g, '_');
-    console.log('Active setting: ', activeSetting);
-    console.log('SubHeader: ', subHeader);
-    console.log('SubHeader parsed: ', activeSettingParsed);
 
     return (
       <div className='container'>

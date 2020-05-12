@@ -176,6 +176,12 @@ pokervaultdb.addUser = userId => {
   });
 };
 
+pokervaultdb.deleteSetting = setting => {
+  return new Promise((resolve, reject) => {
+    pool.query();
+  });
+};
+
 module.exports = pokervaultdb;
 
 // const state = {

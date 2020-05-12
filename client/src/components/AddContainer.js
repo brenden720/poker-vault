@@ -3,11 +3,21 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Back from './Back';
 import { fetchSessions, fetchSetting } from '../actions';
+import Setting from './Setting';
 
 class AddContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHovered: false,
+    };
+    this.inputRef = React.createRef();
+  }
+
   componentDidMount() {
     this.props.fetchSessions();
     this.props.fetchSetting(this.getActiveSetting());
+    // console.log(this.inputRef);
   }
 
   getActiveSetting = () => {
@@ -21,6 +31,10 @@ class AddContainer extends PureComponent {
 
     return activeSetting;
   };
+
+  // onMouseEnter = () => this.setState({ isHovered: true });
+
+  // onMouseLeave = () => this.setState({ isHovered: false });
 
   renderSessions = () => {
     return this.props.sessions.map(session => {
@@ -43,9 +57,9 @@ class AddContainer extends PureComponent {
     const settings = this.props.settings.values;
     return settings.map((setting, id) => {
       return (
-        <Link to='#' className='btn btn-outline-dark btn-lg btn-block' key={id}>
-          {setting}
-        </Link>
+        <div key={id}>
+          <Setting setting={setting} />
+        </div>
       );
     });
   };
