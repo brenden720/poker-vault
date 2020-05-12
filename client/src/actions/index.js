@@ -97,6 +97,7 @@ export const createSetting = formValues => {
       `api/settings/${userId}/${activeSetting}`,
       { ...formValues },
     );
+
     dispatch({ type: CREATE_SETTING, payload: response.data });
     history.push(`/sessions/settings/${activeSettingParsed}`);
   };

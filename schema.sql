@@ -68,7 +68,7 @@ CREATE TABLE location_types
       AUTO_INCREMENT PRIMARY KEY,
       stake VARCHAR
       (100) UNIQUE
-);
+    );
 
       DROP TABLE IF EXISTS user_stakes;
 

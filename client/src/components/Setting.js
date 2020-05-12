@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 class Setting extends React.Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class Setting extends React.Component {
 
   render() {
     const { setting } = this.props;
-    console.log(this.state.isHovered);
+
     return (
       <div
         className='d-flex'

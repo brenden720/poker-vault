@@ -45,7 +45,6 @@ class AllSettingsAdd extends React.Component {
 
   renderError({ error, touched }) {
     if (touched && error) {
-      console.log('error appears?');
       return <div className='header text-danger'>{error}</div>;
     }
   }

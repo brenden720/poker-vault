@@ -79,8 +79,9 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
     const settingTypeId = `${column}_id`;
     const combinedTable = `user_${settingType}`;
     const value = Object.values(newSetting)[0];
-    const queryOne = `INSERT INTO ${settingType} (${column}) VALUES ('${value}')`;
-    const queryTwo = `INSERT INTO ${combinedTable} (user_id, ${settingTypeId}) VALUES (${userId}, last_insert_id())`;
+    const queryOne = `INSERT IGNORE INTO ${settingType} (${column}) VALUES ('${value}')`;
+    const queryTwo = `INSERT IGNORE INTO ${combinedTable} (user_id, ${settingTypeId}) VALUES (${userId}, last_insert_id())`;
+    const backupQueryOne = `SELECT id FROM ${settingType} WHERE ${column} = '${value}'`;
 
     pool.getConnection((err, conn) => {
       conn.beginTransaction(err => {
@@ -92,22 +93,48 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
             });
           }
 
-          conn.query(queryTwo, (error, results, fields) => {
-            if (error) {
-              return conn.rollback(() => {
-                throw error;
-              });
-            }
-            conn.commit(err => {
-              if (err) {
+          if (results.insertId > 0) {
+            conn.query(queryTwo, (error, results, fields) => {
+              if (error) {
                 return conn.rollback(() => {
-                  throw err;
+                  throw error;
                 });
               }
-              console.log('success!');
-              return resolve(results);
+              conn.commit(err => {
+                if (err) {
+                  return conn.rollback(() => {
+                    throw err;
+                  });
+                }
+                return resolve(results);
+              });
             });
-          });
+          } else {
+            conn.query(backupQueryOne, (error, results, fields) => {
+              if (error) {
+                return conn.rollback(() => {
+                  throw error;
+                });
+              }
+              const backupQueryTwo = `INSERT IGNORE INTO ${combinedTable} (user_id, ${settingTypeId}) VALUES (${userId}, ${results[0].id})`;
+
+              conn.query(backupQueryTwo, (error, results, fields) => {
+                if (error) {
+                  return conn.rollback(() => {
+                    throw error;
+                  });
+                }
+                conn.commit(err => {
+                  if (err) {
+                    return conn.rollback(() => {
+                      throw err;
+                    });
+                  }
+                  return resolve(results);
+                });
+              });
+            });
+          }
         });
       });
     });
