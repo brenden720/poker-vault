@@ -203,9 +203,42 @@ pokervaultdb.addUser = userId => {
   });
 };
 
-pokervaultdb.deleteSetting = setting => {
+pokervaultdb.deleteSetting = (tableName, userId, setting) => {
   return new Promise((resolve, reject) => {
-    pool.query();
+    pool.getConnection((err, conn) => {
+      conn.beginTransaction(err => {
+        if (err) throw err;
+
+        const column = tableName.substring(0, tableName.length - 1);
+        const fetchIdQuery = `SELECT id from ${tableName} WHERE ${column}='${setting}'`;
+
+        conn.query(fetchIdQuery, (error, results, fields) => {
+          if (error) {
+            return conn.rollback(() => {
+              throw error;
+            });
+          }
+
+          const deleteQuery = `DELETE FROM user_${tableName} WHERE user_id = ${userId} AND ${column}_id = ${results[0].id}`;
+
+          conn.query(deleteQuery, (error, results, fields) => {
+            if (error) {
+              return conn.rollback(() => {
+                throw error;
+              });
+            }
+            conn.commit(err => {
+              if (err) {
+                return conn.rollback(() => {
+                  throw err;
+                });
+              }
+              return resolve(results);
+            });
+          });
+        });
+      });
+    });
   });
 };
 

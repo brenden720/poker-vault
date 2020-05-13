@@ -1,4 +1,8 @@
-import { FETCH_SETTINGS, FETCH_SETTING } from '../actions/types';
+import {
+  FETCH_SETTINGS,
+  FETCH_SETTING,
+  DELETE_SETTING,
+} from '../actions/types';
 
 const INITIAL_STATE = {
   location_type: { values: [], isActive: false },
@@ -84,6 +88,15 @@ export default (state = INITIAL_STATE, action) => {
           },
         };
       }
+    case DELETE_SETTING:
+      const modifiedArr = action.payload[0].values.filter(value => {
+        return value !== action.payload[2];
+      });
+
+      return {
+        ...state,
+        [action.payload[1]]: { values: modifiedArr, isActive: true },
+      };
     default:
       return state;
   }

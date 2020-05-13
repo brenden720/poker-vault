@@ -15,9 +15,7 @@ class AddContainer extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchSessions();
     this.props.fetchSetting(this.getActiveSetting());
-    // console.log(this.inputRef);
   }
 
   getActiveSetting = () => {

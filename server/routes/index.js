@@ -6,6 +6,7 @@ const router = express.Router();
 // Get all cash sessions
 
 router.get('/cash/:userid/:sessiontype', async (req, res, next) => {
+  console.log('/cash/:userid/:sessiontype: GET: ', req.params);
   try {
     let results = await db.getSessions(
       req.params.sessiontype,
@@ -65,6 +66,7 @@ router.get(
 );
 
 router.get('/settings/:userid/:settingtype', async (req, res, next) => {
+  console.log('/settings/:userid/:settingtype: GET: ', req.params);
   try {
     let results = await db.getSetting(
       req.params.settingtype,
@@ -91,6 +93,7 @@ router.get('/results/:userid/:resulttype', async (req, res, next) => {
 
 // Add a specific setting
 router.post('/settings/:userid/:settingtype', async (req, res, next) => {
+  console.log('/settings/:userid/:settingtype: POST: ', req.params);
   try {
     let results = await db.addSetting(
       req.params.settingtype,
@@ -151,6 +154,22 @@ router.post('/user/:userid/:fullName/:email', async (req, res, next) => {
 });
 
 // Delete setting
-router.delete('', async (req, res, next) => {});
+router.delete('/settings/:userid/:settingtype', async (req, res, next) => {
+  console.log('/settings/:userid/:settingtype: DELETE: ', req.params);
+  const tableName = req.params.settingtype.replace(/-/g, '_');
+
+  try {
+    let results = await db.deleteSetting(
+      tableName,
+      req.params.userid,
+      req.body.setting,
+    );
+
+    res.json(results);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;

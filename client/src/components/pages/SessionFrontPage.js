@@ -7,7 +7,7 @@ import { createUser, fetchSessions, setDashboard } from '../../actions';
 class SessionFrontPage extends React.Component {
   componentDidMount() {
     this.props.createUser();
-    this.props.fetchSessions();
+    // this.props.fetchSessions();
     this.props.setDashboard();
   }
 
