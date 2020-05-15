@@ -59,7 +59,6 @@ export const fetchSettings = () => {
 };
 
 export const fetchSetting = setting => {
-  console.log('fetched');
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     const response = await pages.get(`api/settings/${userId}/${setting}`);
@@ -104,6 +103,7 @@ export const createSetting = formValues => {
 };
 
 export const createCashSession = formValues => {
+  console.log('Form Values: ', formValues);
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     const response = await pages.post(`/api/cash/${userId}`, {

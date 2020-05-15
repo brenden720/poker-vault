@@ -1,9 +1,37 @@
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import Back from '../../Back';
 import { createSetting } from '../../../actions';
+
+const SETTINGS = {
+  location_type: {
+    type: 'input',
+    label: 'Location Type',
+  },
+  limit_type: {
+    type: 'input',
+    label: 'Limit Type',
+  },
+  stake: {
+    type: 'input',
+    label: 'Stake',
+  },
+  location: {
+    type: 'input',
+    label: 'Location',
+  },
+  tournament_type: {
+    type: 'input',
+    label: 'Tournament Type',
+  },
+  game: {
+    type: 'input',
+    label: 'Game',
+  },
+};
 
 class AllSettingsAdd extends React.Component {
   constructor(props) {
@@ -108,30 +136,12 @@ const validate = formValues => {
   console.log('form values in validate: ', formValues);
   const errors = {};
 
-  if (!formValues.location_type) {
-    errors.location_type = 'You must enter a location type';
-  }
-
-  if (!formValues.limit_type) {
-    errors.limit_type = 'You must enter a limit type';
-  }
-
-  if (!formValues.stake) {
-    errors.stake = 'You must enter a stake level';
-  }
-
-  if (!formValues.location) {
-    errors.location = 'You must enter a location';
-  }
-
-  if (!formValues.tournament_type) {
-    errors.tournament_type = 'You must enter a tournament type';
-  }
-
-  if (!formValues.game) {
-    errors.game = 'You must enter a game type';
-  }
-
+  _.each(SETTINGS, (type, field) => {
+    const parsedField = field.replace(/_/g, ' ');
+    if (!formValues[field]) {
+      errors[field] = `Enter a ${parsedField}`;
+    }
+  });
   return errors;
 };
 

@@ -27,7 +27,6 @@ class Setting extends React.Component {
     const tableName = this.getActiveSetting().replace(/-/g, '_');
     console.log('tableName:', tableName);
     this.props.deleteSetting(tableName, this.inputRef.current.firstChild.data);
-    // this.props.fetchSetting(tableName);
   };
 
   onMouseEnter = () => this.setState({ isHovered: true });

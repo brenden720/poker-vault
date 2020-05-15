@@ -64,8 +64,6 @@ class Header extends React.Component {
   }
 }
 
-// export default Header;
-
 const mapStateToProps = state => {
   return { isSignedIn: state.auth.isSignedIn, fullName: state.auth.fullName };
 };

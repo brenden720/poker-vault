@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import Back from '../Back';
+import SettingDropdown from '../SettingDropdown';
 import { createCashSession, fetchSessions } from '../../actions';
 
 class SessionHistoryFormCash extends React.Component {
-  onChange = e => {
-    console.log('On change: ', e);
-  };
-
   onSubmit = formProps => {
     this.props.createCashSession(formProps);
   };
 
-  renderInput = ({ input, meta, type, placeholder, min, max }) => {
+  renderInput = ({ input, type, placeholder }) => {
     return (
       <Form.Control
         type={type}
@@ -25,7 +22,7 @@ class SessionHistoryFormCash extends React.Component {
     );
   };
 
-  renderTextArea = ({ input, type, placeholder }) => {
+  renderTextArea = ({ input, placeholder }) => {
     return (
       <Form.Control
         as='textarea'
@@ -48,48 +45,38 @@ class SessionHistoryFormCash extends React.Component {
             <div className='form-row'>
               <div className='col-md'>
                 <Form.Group controlId='formBasicGameType'>
-                  <Form.Label>Game</Form.Label>
-                  <Field
-                    name='game'
-                    type='text'
-                    component={this.renderInput}
-                    placeholder='Game'
+                  <Form.Label className='d-block'>Game</Form.Label>
+                  <SettingDropdown
+                    settings={this.props.settings.game}
+                    name={'game'}
                   />
                 </Form.Group>
                 <Form.Group controlId='formBasicStakeLevel'>
-                  <Form.Label>Stake</Form.Label>
-                  <Field
-                    name='stake'
-                    type='text'
-                    component={this.renderInput}
-                    placeholder='Stake Level'
+                  <Form.Label className='d-block'>Stake</Form.Label>
+                  <SettingDropdown
+                    settings={this.props.settings.stake}
+                    name={'stake'}
                   />
                 </Form.Group>
                 <Form.Group controlId='formBasicLimitType'>
-                  <Form.Label>Limit Type</Form.Label>
-                  <Field
-                    name='limit_type'
-                    type='text'
-                    component={this.renderInput}
-                    placeholder='Limit Type'
+                  <Form.Label className='d-block'>Limit Type</Form.Label>
+                  <SettingDropdown
+                    settings={this.props.settings.limit_type}
+                    name={'limit_type'}
                   />
                 </Form.Group>
                 <Form.Group controlId='formBasicLocation'>
-                  <Form.Label>Location</Form.Label>
-                  <Field
-                    name='location'
-                    type='text'
-                    component={this.renderInput}
-                    placeholder='Location'
+                  <Form.Label className='d-block'>Location</Form.Label>
+                  <SettingDropdown
+                    settings={this.props.settings.location}
+                    name={'location'}
                   />
                 </Form.Group>
                 <Form.Group controlId='formBasicLocationType'>
-                  <Form.Label>Location Type</Form.Label>
-                  <Field
-                    name='location_type'
-                    type='text'
-                    component={this.renderInput}
-                    placeholder='Location Type'
+                  <Form.Label className='d-block'>Location Type</Form.Label>
+                  <SettingDropdown
+                    settings={this.props.settings.location_type}
+                    name={'location_type'}
                   />
                 </Form.Group>
               </div>
@@ -236,9 +223,16 @@ class SessionHistoryFormCash extends React.Component {
 }
 
 // export default connect(null, { createCashSession })(SessionHistoryFormCash);
+const mapStateToProps = state => {
+  return {
+    settings: state.settings,
+  };
+};
 
 const formWrapped = reduxForm({
   form: 'sessionHistoryCashForm',
 })(SessionHistoryFormCash);
 
-export default connect(null, { createCashSession, fetchSessions })(formWrapped);
+export default connect(mapStateToProps, { createCashSession, fetchSessions })(
+  formWrapped,
+);

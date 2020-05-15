@@ -23,4 +23,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, { fetchSessions })(SessionHistoryCash);
-// export default SessionHistoryCash;

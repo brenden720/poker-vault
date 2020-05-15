@@ -2,14 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './SessionFrontPage.css';
-import { createUser, fetchSessions, setDashboard } from '../../actions';
+import {
+  createUser,
+  fetchSessions,
+  setDashboard,
+  fetchSetting,
+} from '../../actions';
 
 class SessionFrontPage extends React.Component {
   componentDidMount() {
     this.props.createUser();
-    // this.props.fetchSessions();
     this.props.setDashboard();
   }
+
+  onClick = () => {
+    this.props.fetchSetting('location_types');
+    this.props.fetchSetting('limit_types');
+    this.props.fetchSetting('stakes');
+    this.props.fetchSetting('locations');
+    this.props.fetchSetting('tournament_types');
+    this.props.fetchSetting('games');
+  };
 
   render() {
     return (
@@ -21,6 +34,7 @@ class SessionFrontPage extends React.Component {
               <Link
                 to='/sessions/cash/all'
                 className='btn btn-dark btn-lg btnFrontPage'
+                onClick={this.onClick}
               >
                 Cash Game History
               </Link>
@@ -54,9 +68,9 @@ const mapStateToProps = state => {
   };
 };
 
-// export default SessionFrontPage;
 export default connect(mapStateToProps, {
   createUser,
   fetchSessions,
   setDashboard,
+  fetchSetting,
 })(SessionFrontPage);

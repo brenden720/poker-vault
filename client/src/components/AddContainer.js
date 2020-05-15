@@ -15,7 +15,14 @@ class AddContainer extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchSetting(this.getActiveSetting());
+    const { dashboard, settings } = this.props.container;
+
+    if (dashboard) {
+      this.props.fetchSessions();
+    }
+    if (settings) {
+      this.props.fetchSetting(this.getActiveSetting());
+    }
   }
 
   getActiveSetting = () => {
