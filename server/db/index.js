@@ -252,6 +252,21 @@ pokervaultdb.deleteSetting = (tableName, userId, setting) => {
   });
 };
 
+pokervaultdb.deleteSession = sessionId => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM cash_sessions WHERE id = ?`,
+      sessionId,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      },
+    );
+  });
+};
+
 module.exports = pokervaultdb;
 
 // const state = {

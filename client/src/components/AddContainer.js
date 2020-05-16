@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Back from './Back';
 import { fetchSessions, fetchSetting } from '../actions';
 import Setting from './Setting';
+import Session from './Session';
 
 class AddContainer extends PureComponent {
   constructor(props) {
@@ -42,15 +43,15 @@ class AddContainer extends PureComponent {
   // onMouseLeave = () => this.setState({ isHovered: false });
 
   renderSessions = () => {
+    if (!this.props.settings) {
+      return null;
+    }
+    console.log(this.props.sessions);
     return this.props.sessions.map(session => {
       return (
-        <Link
-          to='#'
-          className='btn btn-outline-dark btn-lg btn-block'
-          key={session.id}
-        >
-          Session {session.id}
-        </Link>
+        <div key={session.id}>
+          <Session id={session.id} />
+        </div>
       );
     });
   };

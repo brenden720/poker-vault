@@ -12,6 +12,7 @@ import {
   CREATE_CASH_SESSION,
   CREATE_SETTING,
   DELETE_SETTING,
+  DELETE_SESSION,
 } from './types';
 
 export const signIn = payload => {
@@ -135,6 +136,18 @@ export const deleteSetting = (tableName, setting) => {
     dispatch({
       type: DELETE_SETTING,
       payload: [currentState[stateSetting], stateSetting, setting],
+    });
+  };
+};
+
+export const deleteSession = sessionId => {
+  return async (dispatch, getState) => {
+    const { userId } = getState().auth;
+    await pages.delete(`api/cash/${userId}/${sessionId}`);
+
+    dispatch({
+      type: DELETE_SESSION,
+      payload: sessionId,
     });
   };
 };

@@ -172,4 +172,14 @@ router.delete('/settings/:userid/:settingtype', async (req, res, next) => {
   }
 });
 
+router.delete('/cash/:userid/:sessionid', async (req, res, next) => {
+  try {
+    await db.deleteSession(req.params.sessionid);
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
