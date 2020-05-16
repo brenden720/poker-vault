@@ -142,14 +142,26 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
 };
 
 pokervaultdb.addCashSession = (userId, newSession) => {
+  newSession.start_time = new Date(newSession.start_time)
+    .toISOString()
+    .slice(0, 19)
+    .replace('T', ' ');
+  newSession.end_time = new Date(newSession.end_time)
+    .toISOString()
+    .slice(0, 19)
+    .replace('T', ' ');
+
+  console.log('start time: ', newSession.start_time);
+  console.log('end time: ', newSession.end_time);
+
   const sessionData = [
     newSession.game,
     newSession.stake,
     newSession.limit_type,
     newSession.location,
     newSession.location_type,
-    // newSession.start_time,
-    // newSession.end_time,
+    newSession.start_time,
+    newSession.end_time,
     newSession.buy_in,
     newSession.cashed_out,
     newSession.tips,
@@ -157,11 +169,9 @@ pokervaultdb.addCashSession = (userId, newSession) => {
     userId,
   ];
 
-  // `INSERT INTO cash_sessions (game, stake, limit_type, location, location_type, start_time, end_time, buy_in, cashed_out, tips, notes) VALUES (?)`;
-
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO cash_sessions (game, stake, limit_type, location, location_type, buy_in, cashed_out, tips, notes, user_id) VALUES (?)`,
+      `INSERT INTO cash_sessions (game, stake, limit_type, location, location_type, start_time, end_time, buy_in, cashed_out, tips, notes, user_id) VALUES (?)`,
       [sessionData],
       (err, results) => {
         if (err) {

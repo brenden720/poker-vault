@@ -5,6 +5,9 @@ import { Field, reduxForm } from 'redux-form';
 import Back from '../Back';
 import SettingDropdown from '../SettingDropdown';
 import { createCashSession, fetchSessions } from '../../actions';
+import Datetime from 'react-datetime';
+import SessionTime from '../SessionTime';
+import styles from '../../../public/reactDateTime.css';
 
 class SessionHistoryFormCash extends React.Component {
   onSubmit = formProps => {
@@ -82,22 +85,24 @@ class SessionHistoryFormCash extends React.Component {
               </div>
               <div className='col-md'>
                 <Form.Group controlId='formBasicStartTime'>
-                  <Form.Label>Start Time</Form.Label>
-                  <Field
+                  {/* <Form.Label>Start Time</Form.Label> */}
+                  {/* <Field
                     name='start_time'
                     type='text'
-                    component={this.renderInput}
+                    component={SessionTime}
                     placeholder='Start Time'
-                  />
+                  /> */}
+                  <SessionTime label='Start Time' />
                 </Form.Group>
                 <Form.Group controlId='formBasicEndTime'>
-                  <Form.Label>End Time</Form.Label>
-                  <Field
+                  {/* <Form.Label>End Time</Form.Label> */}
+                  {/* <Field
                     name='end_time'
                     type='text'
                     component={this.renderInput}
                     placeholder='End Time'
-                  />
+                  /> */}
+                  <SessionTime label='End Time' />
                 </Form.Group>
                 <Form.Group controlId='formBasicBuyIn'>
                   <Form.Label>Buy-In</Form.Label>
