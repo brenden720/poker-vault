@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-// const async = require('async');
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -11,8 +10,6 @@ const pool = mysql.createPool({
 });
 
 const pokervaultdb = {};
-
-// For GET requests
 
 pokervaultdb.getSessions = (sessionType, userId) => {
   return new Promise((resolve, reject) => {
@@ -71,10 +68,8 @@ pokervaultdb.getResults = (resultType, userId) => {
   });
 };
 
-// For POST requests
-
 pokervaultdb.addSetting = (settingType, userId, newSetting) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const column = settingType.substring(0, settingType.length - 1);
     const settingTypeId = `${column}_id`;
     const combinedTable = `user_${settingType}`;
@@ -86,7 +81,7 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
     pool.getConnection((err, conn) => {
       conn.beginTransaction(err => {
         if (err) throw err;
-        conn.query(queryOne, (error, results, fields) => {
+        conn.query(queryOne, (error, results) => {
           if (error) {
             return conn.rollback(() => {
               throw error;
@@ -94,7 +89,7 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
           }
 
           if (results.insertId > 0) {
-            conn.query(queryTwo, (error, results, fields) => {
+            conn.query(queryTwo, (error, results) => {
               if (error) {
                 return conn.rollback(() => {
                   throw error;
@@ -110,7 +105,7 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
               });
             });
           } else {
-            conn.query(backupQueryOne, (error, results, fields) => {
+            conn.query(backupQueryOne, (error, results) => {
               if (error) {
                 return conn.rollback(() => {
                   throw error;
@@ -118,7 +113,7 @@ pokervaultdb.addSetting = (settingType, userId, newSetting) => {
               }
               const backupQueryTwo = `INSERT IGNORE INTO ${combinedTable} (user_id, ${settingTypeId}) VALUES (${userId}, ${results[0].id})`;
 
-              conn.query(backupQueryTwo, (error, results, fields) => {
+              conn.query(backupQueryTwo, (error, results) => {
                 if (error) {
                   return conn.rollback(() => {
                     throw error;
@@ -150,9 +145,6 @@ pokervaultdb.addCashSession = (userId, newSession) => {
     .toISOString()
     .slice(0, 19)
     .replace('T', ' ');
-
-  console.log('start time: ', newSession.start_time);
-  console.log('end time: ', newSession.end_time);
 
   const sessionData = [
     newSession.game,
@@ -214,7 +206,7 @@ pokervaultdb.addUser = userId => {
 };
 
 pokervaultdb.deleteSetting = (tableName, userId, setting) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     pool.getConnection((err, conn) => {
       conn.beginTransaction(err => {
         if (err) throw err;
@@ -222,7 +214,7 @@ pokervaultdb.deleteSetting = (tableName, userId, setting) => {
         const column = tableName.substring(0, tableName.length - 1);
         const fetchIdQuery = `SELECT id from ${tableName} WHERE ${column}='${setting}'`;
 
-        conn.query(fetchIdQuery, (error, results, fields) => {
+        conn.query(fetchIdQuery, (error, results) => {
           if (error) {
             return conn.rollback(() => {
               throw error;
@@ -231,7 +223,7 @@ pokervaultdb.deleteSetting = (tableName, userId, setting) => {
 
           const deleteQuery = `DELETE FROM user_${tableName} WHERE user_id = ${userId} AND ${column}_id = ${results[0].id}`;
 
-          conn.query(deleteQuery, (error, results, fields) => {
+          conn.query(deleteQuery, (error, results) => {
             if (error) {
               return conn.rollback(() => {
                 throw error;
@@ -268,67 +260,3 @@ pokervaultdb.deleteSession = sessionId => {
 };
 
 module.exports = pokervaultdb;
-
-// const state = {
-//   pool: null,
-// };
-
-// exports.connect = done => {
-//   state.pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'pokervault',
-//     password: 'pokervault',
-//     database: 'PokerVault',
-//   });
-
-//   done();
-// };
-
-// exports.get = () => state.pool;
-
-// exports.fixtures = (data, done) => {
-//   const { pool } = state;
-//   if (!pool) return done(new Error('Missing database connection'));
-
-//   var names = Object.keys(data.tables);
-//   async.each(
-//     names,
-//     function (name, cb) {
-//       async.each(
-//         data.tables[name],
-//         function (row, cb) {
-//           var keys = Object.keys(row),
-//             values = keys.map(function (key) {
-//               return "'" + row[key] + "'";
-//             });
-
-//           pool.query(
-//             'INSERT INTO ' +
-//               name +
-//               ' (' +
-//               keys.join(',') +
-//               ') VALUES (' +
-//               values.join(',') +
-//               ')',
-//             cb,
-//           );
-//         },
-//         cb,
-//       );
-//     },
-//     done,
-//   );
-// };
-
-// exports.drop = function (tables, done) {
-//   var pool = state.pool;
-//   if (!pool) return done(new Error('Missing database connection.'));
-
-//   async.each(
-//     tables,
-//     function (name, cb) {
-//       pool.query('DELETE * FROM ' + name, cb);
-//     },
-//     done,
-//   );
-// };

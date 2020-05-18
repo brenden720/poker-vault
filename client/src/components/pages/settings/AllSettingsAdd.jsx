@@ -45,14 +45,16 @@ class AllSettingsAdd extends React.Component {
     }
   }
 
-  onSubmit = formProps => {
-    this.props.createSetting(formProps);
+  onSubmit = (formProps) => {
+    const { createSetting } = this.props;
+
+    createSetting(formProps);
   };
 
   getActiveSetting = () => {
     const { settingDetails } = this.props;
     let activeSetting = '';
-    for (let keys in settingDetails) {
+    for (const keys in settingDetails) {
       if (settingDetails[keys].isActive) {
         activeSetting = keys.replace(/_/g, '-');
       }
@@ -61,11 +63,11 @@ class AllSettingsAdd extends React.Component {
     return activeSetting;
   };
 
-  getSubHeader = title => {
+  getSubHeader = (title) => {
     const parsedTitle = title
       .replace(/-/g, ' ')
       .split(' ')
-      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
       .join(' ');
 
     return parsedTitle;
@@ -73,8 +75,9 @@ class AllSettingsAdd extends React.Component {
 
   renderError({ error, touched }) {
     if (touched && error) {
-      return <div className='header text-danger'>{error}</div>;
+      return <div className="header text-danger">{error}</div>;
     }
+    return null;
   }
 
   renderInput = ({ input, meta, type, placeholder }) => {
@@ -102,27 +105,28 @@ class AllSettingsAdd extends React.Component {
     const activeSetting = this.getActiveSetting();
     const subHeader = this.getSubHeader(activeSetting);
     const activeSettingParsed = activeSetting.replace(/-/g, '_');
+    const { handleSubmit } = this.props;
 
     return (
-      <div className='container'>
-        <div className='info-header'>
-          <h1 className='text-dark text-center'>Settings</h1>
+      <div className="container">
+        <div className="info-header">
+          <h1 className="text-dark text-center">Settings</h1>
           <Back route={`/sessions/settings/${activeSetting}`} />
-          <h3 className='text-dark text-center mb-3'>{subHeader}</h3>
+          <h3 className="text-dark text-center mb-3">{subHeader}</h3>
         </div>
-        <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <Form onSubmit={handleSubmit(this.onSubmit)}>
           <Form.Group controlId={`formBasic${activeSetting}`}>
             <Form.Label>{subHeader}</Form.Label>
             <Field
               name={activeSettingParsed}
-              type='text'
+              type="text"
               component={this.renderInput}
               placeholder={subHeader}
             />
           </Form.Group>
           <button
-            type='submit'
-            className='btn btn-outline-dark btn-lg btn-block'
+            type="submit"
+            className="btn btn-outline-dark btn-lg btn-block"
           >
             Add {subHeader}
           </button>
@@ -132,8 +136,7 @@ class AllSettingsAdd extends React.Component {
   }
 }
 
-const validate = formValues => {
-  console.log('form values in validate: ', formValues);
+const validate = (formValues) => {
   const errors = {};
 
   _.each(SETTINGS, (type, field) => {
@@ -145,7 +148,7 @@ const validate = formValues => {
   return errors;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     settingNames: Object.keys(state.settings),
     settingDetails: state.settings,

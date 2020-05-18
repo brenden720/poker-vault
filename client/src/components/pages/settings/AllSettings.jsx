@@ -6,19 +6,21 @@ class AllSettings extends React.Component {
   getActiveSetting = () => {
     const { settingDetails } = this.props;
     let activeSetting = '';
-    for (let keys in settingDetails) {
-      if (settingDetails[keys].isActive) {
-        activeSetting = keys.replace(/_/g, '-');
+
+    for (const key in settingDetails) {
+      if (settingDetails[key].isActive) {
+        activeSetting = key.replace(/_/g, '-');
       }
     }
+
     return activeSetting;
   };
 
-  getSubHeader = title => {
+  getSubHeader = (title) => {
     const parsedTitle = title
       .replace(/-/g, ' ')
       .split(' ')
-      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
       .join(' ');
     return parsedTitle;
   };
@@ -29,16 +31,16 @@ class AllSettings extends React.Component {
 
     return (
       <AddContainer
-        mainHeader='Settings'
+        mainHeader="Settings"
         subHeader={subHeader}
         route1={`/sessions/settings/${activeSetting}/new`}
-        backRoute='/sessions/settings'
+        backRoute="/sessions/settings"
       />
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     settingNames: Object.keys(state.settings),
     settingDetails: state.settings,

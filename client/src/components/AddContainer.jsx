@@ -9,27 +9,29 @@ import Session from './Session';
 class AddContainer extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      isHovered: false,
-    };
     this.inputRef = React.createRef();
   }
 
   componentDidMount() {
-    const { dashboard, settings } = this.props.container;
+    const {
+      fetchSessions,
+      fetchSetting,
+      container: { dashboard, settings },
+    } = this.props;
 
     if (dashboard) {
-      this.props.fetchSessions();
+      fetchSessions();
     }
     if (settings) {
-      this.props.fetchSetting(this.getActiveSetting());
+      fetchSetting(this.getActiveSetting());
     }
   }
 
   getActiveSetting = () => {
     const { settingDetails } = this.props;
     let activeSetting = '';
-    for (let keys in settingDetails) {
+
+    for (const keys in settingDetails) {
       if (settingDetails[keys].isActive) {
         activeSetting = keys.concat('s');
       }
@@ -38,16 +40,13 @@ class AddContainer extends PureComponent {
     return activeSetting;
   };
 
-  // onMouseEnter = () => this.setState({ isHovered: true });
-
-  // onMouseLeave = () => this.setState({ isHovered: false });
-
   renderSessions = () => {
-    if (!this.props.settings) {
+    const { settings, sessions } = this.props;
+    if (!settings) {
       return null;
     }
-    console.log(this.props.sessions);
-    return this.props.sessions.map(session => {
+
+    return sessions.map((session) => {
       return (
         <div key={session.id}>
           <Session id={session.id} />
@@ -57,13 +56,18 @@ class AddContainer extends PureComponent {
   };
 
   renderSettings = () => {
-    if (!this.props.settings) {
+    /* renaming settings to 'exists' to use the 'settings' variable in the map /fn with the values data */
+    const {
+      settings: exists,
+      settings: { values: settings },
+    } = this.props;
+    if (!exists) {
       return null;
     }
-    const settings = this.props.settings.values;
+
     return settings.map((setting, id) => {
       return (
-        <div key={id}>
+        <div key={`setting-${id}`}>
           <Setting setting={setting} />
         </div>
       );
@@ -71,30 +75,35 @@ class AddContainer extends PureComponent {
   };
 
   renderComponent = () => {
-    const { dashboard, settings } = this.props.container;
+    const {
+      container: { dashboard, settings },
+    } = this.props;
 
     if (dashboard) {
       return this.renderSessions();
     }
+
     if (settings) {
       return this.renderSettings();
     }
+
+    return null;
   };
 
   render() {
     const { mainHeader, subHeader, route1, backRoute } = this.props;
 
     return (
-      <div className='container'>
-        <div className='info-header'>
-          <h1 className='text-dark text-center'>{mainHeader}</h1>
+      <div className="container">
+        <div className="info-header">
+          <h1 className="text-dark text-center">{mainHeader}</h1>
           <Back route={backRoute} />
-          <h3 className='text-dark text-center mb-3'>{subHeader}</h3>
-          <div className='row w-50 mx-auto'>
-            <div className='col'>
+          <h3 className="text-dark text-center mb-3">{subHeader}</h3>
+          <div className="row w-50 mx-auto">
+            <div className="col">
               <Link
                 to={route1}
-                className='btn btn-outline-dark btn-lg btn-block'
+                className="btn btn-outline-dark btn-lg btn-block"
               >
                 Add
               </Link>
@@ -107,9 +116,10 @@ class AddContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   let setting = '';
-  for (let key in state.settings) {
+
+  for (const key in state.settings) {
     if (state.settings[key].isActive) {
       setting = key;
       break;
@@ -124,5 +134,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, { fetchSessions, fetchSetting })(
-  AddContainer,
+  AddContainer
 );

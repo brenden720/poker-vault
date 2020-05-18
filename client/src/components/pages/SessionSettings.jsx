@@ -5,27 +5,31 @@ import { setSettings, fetchSetting } from '../../actions';
 
 class SessionSettings extends React.Component {
   componentDidMount() {
-    this.props.setSettings();
+    const { setSettings } = this.props;
+    setSettings();
   }
 
-  onSettingClick = settingName => {
+  onSettingClick = (settingName) => {
+    const { fetchSetting } = this.props;
     settingName += 's';
-    this.props.fetchSetting(settingName);
+    fetchSetting(settingName);
   };
 
   renderSettings() {
-    return this.props.settings.map((setting, id) => {
+    const { settings } = this.props;
+
+    return settings.map((setting, id) => {
       const parsedSettingPath = setting.replace(/_/g, '-');
       const parsedTitle = setting
         .replace(/_/g, ' ')
         .split(' ')
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ');
       return (
-        <div className='p-4 col-6' key={id}>
+        <div className="p-4 col-6" key={id}>
           <Link
             to={`/sessions/settings/${parsedSettingPath}`}
-            className='btn btn-primary btn-block'
+            className="btn btn-primary btn-block"
             onClick={() => this.onSettingClick(setting)}
           >
             {parsedTitle}
@@ -37,11 +41,11 @@ class SessionSettings extends React.Component {
 
   render() {
     return (
-      <div className='container'>
-        <div className='info-header'>
-          <h1 className='text-dark text-center'>Settings</h1>
+      <div className="container">
+        <div className="info-header">
+          <h1 className="text-dark text-center">Settings</h1>
         </div>
-        <div className='d-flex flex-wrap justify-content-around'>
+        <div className="d-flex flex-wrap justify-content-around">
           {this.renderSettings()}
         </div>
       </div>
@@ -49,10 +53,10 @@ class SessionSettings extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { settings: Object.keys(state.settings) };
 };
 
 export default connect(mapStateToProps, { setSettings, fetchSetting })(
-  SessionSettings,
+  SessionSettings
 );

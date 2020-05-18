@@ -14,7 +14,7 @@ class Setting extends React.Component {
   getActiveSetting = () => {
     const { settingDetails } = this.props;
     let activeSetting = '';
-    for (let key in settingDetails) {
+    for (const key in settingDetails) {
       if (settingDetails[key].isActive) {
         activeSetting = key.replace(/_/g, '-');
       }
@@ -24,9 +24,9 @@ class Setting extends React.Component {
   };
 
   onClick = () => {
+    const { deleteSetting } = this.props;
     const tableName = this.getActiveSetting().replace(/-/g, '_');
-    console.log('tableName:', tableName);
-    this.props.deleteSetting(tableName, this.inputRef.current.firstChild.data);
+    deleteSetting(tableName, this.inputRef.current.firstChild.data);
   };
 
   onMouseEnter = () => this.setState({ isHovered: true });
@@ -35,22 +35,23 @@ class Setting extends React.Component {
 
   render() {
     const { setting } = this.props;
+    const { isHovered } = this.state;
 
     return (
       <div
-        className='d-flex'
+        className="d-flex"
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >
-        <div className='w-100 btn btn-outline-dark btn-lg' ref={this.inputRef}>
+        <div className="w-100 btn btn-outline-dark btn-lg" ref={this.inputRef}>
           {setting}
         </div>
-        {this.state.isHovered && (
+        {isHovered && (
           <div
-            className='flex-shrink-1 btn btn-outline-danger border border-dark'
+            className="flex-shrink-1 btn btn-outline-danger border border-dark"
             onClick={this.onClick}
           >
-            <i className='fas fa-trash-alt fa-2x'></i>
+            <i className="fas fa-trash-alt fa-2x"></i>
           </div>
         )}
       </div>
@@ -58,7 +59,7 @@ class Setting extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     settingDetails: state.settings,
   };

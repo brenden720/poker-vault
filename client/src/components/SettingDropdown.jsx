@@ -3,15 +3,15 @@ import { Field } from 'redux-form';
 import history from '../history';
 
 class SettingDropdown extends React.Component {
-  onClick = setting => {
+  onClick = (setting) => {
     history.push(`/sessions/settings/${setting}`);
     return false;
   };
 
-  renderDropDown = setting => {
+  renderDropDown = (setting) => {
     return setting.map((value, id) => {
       return (
-        <option className='btn btn-block' value={value} key={id}>
+        <option className="btn btn-block" value={value} key={`setting-${id}`}>
           {value}
         </option>
       );
@@ -23,8 +23,9 @@ class SettingDropdown extends React.Component {
       name,
       settings: { values },
     } = this.props;
+
     return (
-      <Field name={name} component='select'>
+      <Field name={name} component="select">
         <option />
         {this.renderDropDown(values)}
         <option disabled>───────────────────</option>

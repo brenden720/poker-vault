@@ -3,12 +3,9 @@ const db = require('../db');
 
 const router = express.Router();
 
-// Get all cash sessions
-
-router.get('/cash/:userid/:sessiontype', async (req, res, next) => {
-  console.log('/cash/:userid/:sessiontype: GET: ', req.params);
+router.get('/cash/:userid/:sessiontype', async (req, res) => {
   try {
-    let results = await db.getSessions(
+    const results = await db.getSessions(
       req.params.sessiontype,
       req.params.userid,
     );
@@ -19,11 +16,9 @@ router.get('/cash/:userid/:sessiontype', async (req, res, next) => {
   }
 });
 
-// Get one cash session
-
-router.get('/cash/:userid/:sessiontype/:sessionid', async (req, res, next) => {
+router.get('/cash/:userid/:sessiontype/:sessionid', async (req, res) => {
   try {
-    let results = await db.getSession(
+    const results = await db.getSession(
       req.params.sessiontype,
       req.params.userid,
       req.params.sessionid,
@@ -35,9 +30,9 @@ router.get('/cash/:userid/:sessiontype/:sessionid', async (req, res, next) => {
   }
 });
 
-router.get('/tournament/:userid/:sessiontype', async (req, res, next) => {
+router.get('/tournament/:userid/:sessiontype', async (req, res) => {
   try {
-    let results = await db.getSessions(
+    const results = await db.getSessions(
       req.params.sessiontype,
       req.params.userid,
     );
@@ -48,27 +43,23 @@ router.get('/tournament/:userid/:sessiontype', async (req, res, next) => {
   }
 });
 
-router.get(
-  '/tournament/:userid/:sessiontype/:sessionid/',
-  async (req, res, next) => {
-    try {
-      let results = await db.getSession(
-        req.params.sessiontype,
-        req.params.userid,
-        req.params.sessionid,
-      );
-      res.json(results);
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(500);
-    }
-  },
-);
-
-router.get('/settings/:userid/:settingtype', async (req, res, next) => {
-  console.log('/settings/:userid/:settingtype: GET: ', req.params);
+router.get('/tournament/:userid/:sessiontype/:sessionid/', async (req, res) => {
   try {
-    let results = await db.getSetting(
+    const results = await db.getSession(
+      req.params.sessiontype,
+      req.params.userid,
+      req.params.sessionid,
+    );
+    res.json(results);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+router.get('/settings/:userid/:settingtype', async (req, res) => {
+  try {
+    const results = await db.getSetting(
       req.params.settingtype,
       req.params.userid,
     );
@@ -79,9 +70,12 @@ router.get('/settings/:userid/:settingtype', async (req, res, next) => {
   }
 });
 
-router.get('/results/:userid/:resulttype', async (req, res, next) => {
+router.get('/results/:userid/:resulttype', async (req, res) => {
   try {
-    let results = await db.getResults(req.params.resulttype, req.params.userid);
+    const results = await db.getResults(
+      req.params.resulttype,
+      req.params.userid,
+    );
     res.json(results);
   } catch (e) {
     console.log(e);
@@ -89,13 +83,9 @@ router.get('/results/:userid/:resulttype', async (req, res, next) => {
   }
 });
 
-// POST requests
-
-// Add a specific setting
-router.post('/settings/:userid/:settingtype', async (req, res, next) => {
-  console.log('/settings/:userid/:settingtype: POST: ', req.params);
+router.post('/settings/:userid/:settingtype', async (req, res) => {
   try {
-    let results = await db.addSetting(
+    const results = await db.addSetting(
       req.params.settingtype,
       req.params.userid,
       req.body,
@@ -107,10 +97,9 @@ router.post('/settings/:userid/:settingtype', async (req, res, next) => {
   }
 });
 
-// Add a new cash session
-router.post('/cash/:userid', async (req, res, next) => {
+router.post('/cash/:userid', async (req, res) => {
   try {
-    let results = await db.addCashSession(req.params.userid, req.body);
+    const results = await db.addCashSession(req.params.userid, req.body);
     res.json(results);
   } catch (e) {
     console.log(e);
@@ -118,9 +107,7 @@ router.post('/cash/:userid', async (req, res, next) => {
   }
 });
 
-// Add User
-
-router.post('/user/:userid/:fullName/:email', async (req, res, next) => {
+router.post('/user/:userid/:fullName/:email', async (req, res) => {
   const { userid, fullName, email } = req.params;
 
   if (JSON.parse(userid) === null) {
@@ -129,8 +116,8 @@ router.post('/user/:userid/:fullName/:email', async (req, res, next) => {
   }
 
   try {
-    let idCheck = await db.checkUser(userid);
-    let count = idCheck[0].total;
+    const idCheck = await db.checkUser(userid);
+    const count = idCheck[0].total;
 
     if (count > 0) {
       return res.sendStatus(200);
@@ -153,13 +140,11 @@ router.post('/user/:userid/:fullName/:email', async (req, res, next) => {
   }
 });
 
-// Delete setting
-router.delete('/settings/:userid/:settingtype', async (req, res, next) => {
-  console.log('/settings/:userid/:settingtype: DELETE: ', req.params);
+router.delete('/settings/:userid/:settingtype', async (req, res) => {
   const tableName = req.params.settingtype.replace(/-/g, '_');
 
   try {
-    let results = await db.deleteSetting(
+    const results = await db.deleteSetting(
       tableName,
       req.params.userid,
       req.body.setting,
@@ -172,7 +157,7 @@ router.delete('/settings/:userid/:settingtype', async (req, res, next) => {
   }
 });
 
-router.delete('/cash/:userid/:sessionid', async (req, res, next) => {
+router.delete('/cash/:userid/:sessionid', async (req, res) => {
   try {
     await db.deleteSession(req.params.sessionid);
     res.sendStatus(200);

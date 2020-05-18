@@ -15,7 +15,7 @@ import {
   DELETE_SESSION,
 } from './types';
 
-export const signIn = payload => {
+export const signIn = (payload) => {
   return {
     type: SIGN_IN,
     payload,
@@ -48,7 +48,7 @@ export const fetchSessions = () => {
   };
 };
 
-export const fetchSession = () => async dispatch => {
+export const fetchSession = () => async (dispatch) => {
   const response = await pages.get('api//sessions/:id');
   dispatch({ type: FETCH_SESSION, payload: { session: response.data } });
 };
@@ -59,7 +59,7 @@ export const fetchSettings = () => {
   };
 };
 
-export const fetchSetting = setting => {
+export const fetchSetting = (setting) => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     const response = await pages.get(`api/settings/${userId}/${setting}`);
@@ -81,21 +81,24 @@ export const createUser = () => {
   };
 };
 
-export const createSetting = formValues => {
+export const createSetting = (formValues) => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     const { settings } = getState();
     let activeSetting = '';
-    for (let keys in settings) {
-      if (settings[keys].isActive) {
-        activeSetting = keys += 's';
+
+    for (let key in settings) {
+      if (settings[key].isActive) {
+        key += 's';
+        activeSetting = key;
       }
     }
-    let activeSettingParsed = activeSetting.replace(/_/g, '-').slice(0, -1);
+
+    const activeSettingParsed = activeSetting.replace(/_/g, '-').slice(0, -1);
 
     const response = await pages.post(
       `api/settings/${userId}/${activeSetting}`,
-      { ...formValues },
+      { ...formValues }
     );
 
     dispatch({ type: CREATE_SETTING, payload: response.data });
@@ -103,8 +106,7 @@ export const createSetting = formValues => {
   };
 };
 
-export const createCashSession = formValues => {
-  console.log('Form Values: ', formValues);
+export const createCashSession = (formValues) => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     const response = await pages.post(`/api/cash/${userId}`, {
@@ -120,18 +122,14 @@ export const deleteSetting = (tableName, setting) => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
 
-    console.log('current setting: ', setting);
-    console.log('currentState in deleteSetting: ', getState());
-    const response = await pages.delete(`api/settings/${userId}/${tableName}`, {
+    await pages.delete(`api/settings/${userId}/${tableName}`, {
       data: { setting },
     });
-    console.log('response: ', response);
+
     const currentState = getState().settings;
     const stateSetting = tableName
       .replace(/-/g, '_')
       .substring(0, tableName.length - 1);
-    console.log('state settings: ', currentState);
-    console.log('Table name: ', stateSetting);
 
     dispatch({
       type: DELETE_SETTING,
@@ -140,7 +138,7 @@ export const deleteSetting = (tableName, setting) => {
   };
 };
 
-export const deleteSession = sessionId => {
+export const deleteSession = (sessionId) => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     await pages.delete(`api/cash/${userId}/${sessionId}`);

@@ -7,53 +7,53 @@ import { fetchSettings } from '../actions';
 
 class Header extends React.Component {
   renderHeaderLinks() {
-    if (this.props.isSignedIn) {
+    const { isSignedIn } = this.props;
+    if (isSignedIn) {
       return (
         <>
-          <Nav.Link as={Link} to='/sessions'>
+          <Nav.Link as={Link} to="/sessions">
             Dashboard
           </Nav.Link>
-          <Nav.Link as={Link} to='/sessions/settings'>
+          <Nav.Link as={Link} to="/sessions/settings">
             Settings
           </Nav.Link>
         </>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 
   renderWelcomeText() {
-    if (this.props.isSignedIn) {
-      const firstName = this.props.fullName
+    const { fullName, isSignedIn } = this.props;
+    if (isSignedIn) {
+      const firstName = fullName
         .split(/(\s).+\s/)
         .join('')
         .split(' ')[0];
       return (
         <>
-          <Navbar.Text className='pr-3'>Welcome {firstName}</Navbar.Text>
+          <Navbar.Text className="pr-3">Welcome {firstName}</Navbar.Text>
         </>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 
   render() {
     const { isSignedIn } = this.props;
     return (
-      <Navbar className='navbar navbar-expand-sm navbar-dark bg-dark p-0'>
+      <Navbar className="navbar navbar-expand-sm navbar-dark bg-dark p-0">
         <Container>
           <Navbar.Brand
             as={Link}
             to={isSignedIn ? '/sessions' : '/'}
-            className='pl-3'
+            className="pl-3"
           >
             Poker Vault
           </Navbar.Brand>
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='mr-auto'>{this.renderHeaderLinks()}</Nav>
-            <Nav className='ml-auto'>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">{this.renderHeaderLinks()}</Nav>
+            <Nav className="ml-auto">
               {this.renderWelcomeText()}
               <GoogleAuth />
             </Nav>
@@ -64,7 +64,7 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { isSignedIn: state.auth.isSignedIn, fullName: state.auth.fullName };
 };
 
