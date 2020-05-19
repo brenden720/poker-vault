@@ -6,7 +6,7 @@ import Back from '../Back';
 import SettingDropdown from '../SettingDropdown';
 import { createCashSession, fetchSessions } from '../../actions';
 import SessionTime from '../SessionTime';
-import '../../../public/reactDateTime.css';
+import '../../assets/reactDateTime.css';
 
 class SessionHistoryFormCash extends React.Component {
   onSubmit = (formProps) => {

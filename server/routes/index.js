@@ -3,6 +3,8 @@ const db = require('../db');
 
 const router = express.Router();
 
+console.log('env: ', process.env);
+
 router.get('/cash/:userid/:sessiontype', async (req, res) => {
   try {
     const results = await db.getSessions(

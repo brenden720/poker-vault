@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:react": "webpack-dev-server -d --config webpack.dev.js --open",
+    "dev:react": "webpack -d --watch --config webpack.dev.js",
     "prod:react": "webpack --config webpack.prod.js"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "css-loader": "^3.5.3",
+    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-node": "^4.0.0",
@@ -30,19 +31,24 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "file-loader": "^6.0.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1",
     "prettier": "^2.0.5",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^4.3.0",
     "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.9.0",
     "moment": "^2.25.3",
     "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-datetime": "^2.16.3",

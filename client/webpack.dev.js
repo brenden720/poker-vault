@@ -1,21 +1,20 @@
-const path = require('path');
 const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'development',
-  output: {
-    path: path.join(__dirname, './public'),
-    filename: 'bundle.js',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/assets/template.html',
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        loader: ['style-loader', 'css-loader'],
+      },
+    ],
   },
-  devServer: {
-    contentBase: path.join(__dirname, './public'),
-    compress: true,
-    port: 3000,
-    stats: {
-      children: false,
-      maxModules: 0,
-    },
-  },
-  devtool: 'source-map',
 });
